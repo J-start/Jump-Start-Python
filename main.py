@@ -1,10 +1,9 @@
 
-import requests
-import json
+from coins import *
 
 
 def main():
-    print("")
+    getAllCoinsAndPrint()
 
 if __name__ == '__main__':
     main()

@@ -1,11 +1,20 @@
 import requests
 import json
 
-def get_something():
-    request = requests.get("http://economia.awesomeapi.com.br/json/last/USD-BRL")
-    print("status code response: ", request.status_code)
-    #print("content response: ", request.content)
-    all_fields = json.loads(request.content)
-    print(all_fields)
-    resp = request.json()
-    print("resp[USDBRL][ask]",resp['USDBRL']['ask'])
+def getCoin(coin):
+    request = requests.get(f"http://economia.awesomeapi.com.br/json/last/{coin}-BRL")
+    if request.status_code == 200:
+        resp = request.json()
+        
+        if coin != "USDT":
+            return resp[f"{coin}BRL"]
+        else:
+            return resp["USDBRLT"]
+    else:
+        return "erro"
+    
+def getAllCoinsAndPrint():
+    coins = ["AED","ARS","AUD","BOB","CAD","CHF","CLP","CNY","COP","DKK","ETH","EUR","GBP","HKD","ILS","INR","JPY","MXN","NOK","NZD","PEN","PLN","PYG","RUB","SAR","SEK","SGD","THB","TRY","TWD","USD","USDT","UYU","VEF","XRP","ZAR"]
+    for coin in coins:
+        print(getCoin(coin))
+        print("\n")
