@@ -1,7 +1,7 @@
-import requests
-import json
+from consumeApi import *
 
-def teste():
-    request = requests.get("https://api.bcb.gov.br/dados/serie/bcdata.sgs.11/dados/ultimos/1?formato=json")
+def getSelic():
+    request = getApiSelic()
     resp = request.json()
+    print("res",resp)
     return resp[0]

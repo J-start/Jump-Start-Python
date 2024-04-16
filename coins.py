@@ -9,7 +9,7 @@ def getCoin(coin):
         resp = request.json()
         
         if coin != "USDT":
-            return resp[f"{coin}BRL"]
+            return resp[f"{coin}BRL"]['code']
         else:
             return resp["USDBRLT"]
     else:
