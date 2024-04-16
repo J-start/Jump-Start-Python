@@ -1,8 +1,10 @@
 import requests
 import json
 
+from consumeApi import *
+
 def getCoin(coin):
-    request = requests.get(f"http://economia.awesomeapi.com.br/json/last/{coin}-BRL")
+    request = getApiCoins(coin)
     if request.status_code == 200:
         resp = request.json()
         
