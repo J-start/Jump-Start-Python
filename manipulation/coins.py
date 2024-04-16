@@ -1,7 +1,7 @@
 import requests
 import json
 
-from consumeApi import *
+from API.consumeApi import *
 
 def getCoin(coin):
     request = getApiCoins(coin)
@@ -9,7 +9,7 @@ def getCoin(coin):
         resp = request.json()
         
         if coin != "USDT":
-            return resp[f"{coin}BRL"]['code']
+            return resp[f"{coin}BRL"]
         else:
             return resp["USDBRLT"]
     else:

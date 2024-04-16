@@ -1,4 +1,4 @@
-from consumeApi import *
+from API.consumeApi import *
 
 def getSelic():
     request = getApiSelic()

@@ -1,12 +1,12 @@
-from coins import *
-from selic import *
+from manipulation.coins import *
+from manipulation.selic import *
 import sched
 import time
 
 scheduler = sched.scheduler(time.time, time.sleep)
 
 def scheduleCoin():
-    scheduler.enter(180, 1, scheduleCoin)
+    scheduler.enter(900, 1, scheduleCoin)
     getAllCoinsAndPrint()
 
 def executeScheduleCoin():
@@ -14,7 +14,7 @@ def executeScheduleCoin():
     scheduler.run()
 
 def scheduleSelic():
-    scheduler.enter(180, 1, scheduleSelic)
+    scheduler.enter(900, 1, scheduleSelic)
     getSelic()
 
 def executeScheduleSelic():

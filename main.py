@@ -1,4 +1,4 @@
-from scheduleConsumeApi import *
+from API.scheduleConsumeApi import *
 import threading
 
 
@@ -10,5 +10,3 @@ thread_selic.start()
 
 thread_coin.join()
 thread_selic.join()
-
-print("Ambas as threads concluídas.")
