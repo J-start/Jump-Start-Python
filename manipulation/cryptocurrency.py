@@ -1,20 +1,19 @@
 
-import requests
-import json
+from API.consumeApi import *
 
-def cripto():
+def cripto(crypto):
 
-    data = {
-    "OMSId": 1,
-    "InstrumentId": 1,
-    "Depth": 1
-    }
-
-# Cabeçalho da solicitação
-    headers = {'Content-type': 'application/json'}
-
-# Fazendo a solicitação POST
-    response = requests.post("https://api.coinext.com.br:8443/AP/GetL2Snapshot", json=data, headers=headers)
+    response = getApiCrypto(crypto)
 
     resp = response.json()
+    print("------------------ \n")
     print(resp)
+    print("------------------ \n")
+
+def getAnPrintAllCryptos():
+    cryptos = [1,2,4,6,8,10,12,14,16,18,20,22,28]
+    index =1
+    for crypto in cryptos:
+        print(index)
+        index +=1
+        cripto(crypto)
