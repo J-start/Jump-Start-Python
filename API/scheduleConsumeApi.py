@@ -1,5 +1,6 @@
 from manipulation.coins import *
 from manipulation.selic import *
+from manipulation.cryptocurrency import *
 import sched
 import time
 
@@ -19,5 +20,12 @@ def scheduleSelic():
 
 def executeScheduleSelic():
     scheduleSelic()
-    print("a")
+    scheduler.run()
+
+def scheduleCrypto():
+    scheduler.enter(900, 1, getAndPrintAllCryptos)
+    getAndPrintAllCryptos()
+
+def executeScheduleCrypto():
+    scheduleCrypto()
     scheduler.run()
