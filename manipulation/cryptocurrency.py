@@ -1,5 +1,5 @@
 
-from API.consumeApi import *
+from api.consumeApi import *
 
 def cripto(crypto):
 
@@ -7,13 +7,22 @@ def cripto(crypto):
 
     resp = response.json()
     print("------------------ \n")
-    print(resp)
-    print("------------------ \n")
+    high = round(float(resp[0]['high']),4)
+    low = round(float(resp[0]['low']),4)
+    vol = round(float(resp[0]['vol']),4)
+    last = round(float(resp[0]['last']),4)
+    sell = round(float(resp[0]['sell']),4)
+    buy = round(float(resp[0]['buy']),4)
+    date = resp[0]['date']
+    open = round(float(resp[0]['open']),4)
+
+    print("coin: ",crypto,"high :",high,"low :",low,"vol :",vol,"last :",last,"buy :",buy,"sell :",sell,"date :",date,"open :",open)
 
 def getAndPrintAllCryptos():
-    cryptos = [1,2,4,6,8,10,12,14,16,18,20,22,28]
+    cryptos = ["BTC","LTC","ETH","XRP","BCH","USDT","LINK","DOGE","ADA","EOS","XLM","CHZ","AXS"]
     index =1
     for crypto in cryptos:
-        print(index)
         index +=1
+        print("--------Crypto-------")
         cripto(crypto)
+        print("--------Crypto-------")

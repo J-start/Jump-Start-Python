@@ -11,3 +11,10 @@
 | USIM5.SA | Usinas Siderúrgicas de Minas Gerais S.A.                                                                |
 | ABEV3.SA | Ambev S.A.                                           |
 | MGLU3.SA | MGLU3.SA                                             |
+
+## Explicação de cada campo
+`data.values[0][0] => open` <br>
+`data.values[0][1] => high` <br>
+`data.values[0][2] => low` <br>
+`data.values[0][3] => close` <br>
+`data.values[0][5] => volume`

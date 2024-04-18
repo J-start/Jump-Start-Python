@@ -10,12 +10,6 @@ def getApiCoins(coin):
     request = requests.get(f"http://economia.awesomeapi.com.br/json/last/{coin}-BRL")
     return request
 
-def getApiCrypto(InstrumentId):
-    data = {
-    "OMSId": 1,
-    "InstrumentId": InstrumentId,
-    "Depth": 1
-    }
-    headers = {'Content-type': 'application/json'}
-    request = requests.post("https://api.coinext.com.br:8443/AP/GetL2Snapshot", json=data, headers=headers)
+def getApiCrypto(cripto):
+    request = requests.get(f"https://api.mercadobitcoin.net/api/v4/tickers?symbols={cripto}-BRL")
     return request

@@ -42,4 +42,12 @@
 | XRP   | XRP                                    |
 | ZAR   | Rand Sul-Africano                      |
 
+## Explicação dos campos
+`getCoin(coin)['code'] => Moeda`<br>
+`getCoin(coin)['name'] => nome moeda` <br>
+`getCoin(coin)['high'] => máximo`<br>
+`getCoin(coin)['low'] => minímo` <br>
+`getCoin(coin)['bid'] => compra`<br>
+`getCoin(coin)['ask'] => venda` <br>
+
 
