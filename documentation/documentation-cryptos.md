@@ -17,3 +17,7 @@
 | 20     | Protocolo Stellar  (XLM) |
 | 22     |  Chiliz  (CHZ)           |
 | 28     |  Axie Infinity  (AXS)    |
+
+## Link para uma planilha de log de erros que possam acontecer
+
+[Planilha possíveis erros](https://docs.google.com/spreadsheets/d/1M9elUTiwC6xOfnSNlEyGnaBltqkPwl0m2HZtOwOiBwY/edit?usp=sharing)

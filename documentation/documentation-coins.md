@@ -50,4 +50,8 @@
 `getCoin(coin)['bid'] => compra`<br>
 `getCoin(coin)['ask'] => venda` <br>
 
+## Link para uma planilha de log de erros que possam acontecer
+
+[Planilha possíveis erros](https://docs.google.com/spreadsheets/d/1M9elUTiwC6xOfnSNlEyGnaBltqkPwl0m2HZtOwOiBwY/edit?usp=sharing)
+
 

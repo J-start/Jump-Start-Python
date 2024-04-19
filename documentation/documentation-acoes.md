@@ -18,3 +18,6 @@
 `data.values[0][2] => low` <br>
 `data.values[0][3] => close` <br>
 `data.values[0][5] => volume`
+## Link para uma planilha de log de erros que possam acontecer
+
+[Planilha possíveis erros](https://docs.google.com/spreadsheets/d/1M9elUTiwC6xOfnSNlEyGnaBltqkPwl0m2HZtOwOiBwY/edit?usp=sharing)
