@@ -8,15 +8,7 @@ from datetime import datetime
 
 def getCoin(coin):
     request = getApiCoins(coin)
-    dateActual = datetime.now()
-    dateFormated = dateActual.strftime('%d/%m/%Y')
-    print(dateFormated)
-    dados = {
-            "Data": dateFormated,
-            "Coin": coin,
-            "Status": request.status_code
-            }
-    insertDatasCoins(dados)
+
     if request.status_code == 200:
         resp = request.json()
 
@@ -26,7 +18,13 @@ def getCoin(coin):
         else:
             return resp["USDBRLT"]
     else:
-
+        dateActual = datetime.now()
+        dados = {
+                "Data": dateActual,
+                "Ativo": f"Moeda: {coin}",
+                "Status": request.status_code
+                }
+        insertDatasCoins(dados)
         return "erro"
     
 def getAllCoinsAndPrint():

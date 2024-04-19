@@ -11,7 +11,7 @@ def fetchInformationAction(action):
     #print(len(data.values))
     if len(data.values) == 2:
         print("name-action",action,"Open: ",data.values[1][0].round(2),"High: ",data.values[1][1].round(2),"\t ","LOW: ",data.values[1][2].round(2),"\t ","Close: ",data.values[1][3].round(2),"\t ","\t ","Volume: ",data.values[1][5].round(0))
-    else:
+    elif len(data.values) == 1:
         print("name-action",action,"Open: ",data.values[0][0].round(2),"High: ",data.values[0][1].round(2),"\t ","LOW: ",data.values[0][2].round(2),"\t ","Close: ",data.values[0][3].round(2),"\t ","\t ","Volume: ",data.values[0][5].round(0))
 
 def fetchAllInformationActions():
