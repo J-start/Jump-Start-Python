@@ -1,7 +1,5 @@
 from api.consumeApi import *
 from api.consumeGoogleSheets import *
-from datetime import datetime
-
 
 def getSelic():
     request = getApiSelic()
@@ -12,9 +10,8 @@ def getSelic():
         print("valor",resp[0]['valor'])
         return resp[0]
     else:
-        dateActual = datetime.now()
         dados = {
-                "Data": dateActual,
+                "Data": "",
                 "Ativo": "Selic",
                 "Status": request.status_code
                 }

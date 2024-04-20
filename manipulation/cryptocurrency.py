@@ -1,12 +1,9 @@
 from api.consumeApi import *
 from api.consumeGoogleSheets import *
-from datetime import datetime
 
 def cripto(crypto):
 
     response = getApiCrypto(crypto)
-
-
     if response.status_code == 200:
         resp = response.json()
         if resp != []:
@@ -20,17 +17,15 @@ def cripto(crypto):
             date = resp[0]['date']
             open = round(float(resp[0]['open']),4)
         else:
-            dateActual = datetime.now()
             dados = {
-            "Data": dateActual,
+            "Data": "",
             "Ativo": f"Crypto: {crypto}",
             "Status": "400"
             }
             insertDatasCoins(dados)
     else:
-            dateActual = datetime.now()
             dados = {
-            "Data": dateActual,
+            "Data": "",
             "Crypto": "Crypto: "+crypto,
             "Status": response.status_code
             }

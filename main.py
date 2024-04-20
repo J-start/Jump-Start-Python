@@ -5,8 +5,7 @@ from manipulation.selic import *
 from manipulation.cryptocurrency import *
 from manipulation.acoes import *
 from api.consumeGoogleSheets import *
-import requests
-import json
+
 
 thread_coin = threading.Thread(target=getAllCoinsAndPrint)
 thread_selic = threading.Thread(target=getSelic)

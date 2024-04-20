@@ -1,26 +1,18 @@
 from api.consumeApi import getApiCoins
 from api.consumeGoogleSheets import *
-from datetime import datetime
-
-
-
-
 
 def getCoin(coin):
     request = getApiCoins(coin)
 
     if request.status_code == 200:
         resp = request.json()
-
-       
         if coin != "USDT":
             return resp[f"{coin}BRL"]
         else:
             return resp["USDBRLT"]
     else:
-        dateActual = datetime.now()
         dados = {
-                "Data": dateActual,
+                "Data": "",
                 "Ativo": f"Moeda: {coin}",
                 "Status": request.status_code
                 }
