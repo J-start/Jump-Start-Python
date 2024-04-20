@@ -42,9 +42,3 @@ def getAllCoinsAndPrint():
             ask=response['ask']
             print("high",high)
             print("high",str(high))
-    
-
-def main():
-    getAllCoinsAndPrint()
-if __name__ == "__main__":
-    main()
