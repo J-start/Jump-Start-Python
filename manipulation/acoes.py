@@ -25,7 +25,7 @@ def fetchInformationAction(action):
             insertDatasCoins(dados)
     
 def fetchAllInformationActions():
-    actions = ["PETR4.SA","ERRO","BBAS3.SA","ITSA4.SA","TRPL4.SA","VALE3.SA","CMIG4.SA","SANB11.SA","USIM5.SA","ABEV3.SA","MGLU3.SA"]
+    actions = ["PETR4.SA","BBAS3.SA","ITSA4.SA","TRPL4.SA","VALE3.SA","CMIG4.SA","SANB11.SA","USIM5.SA","ABEV3.SA","MGLU3.SA"]
     for action in actions:
         print("----------- ACOES ----------")
         fetchInformationAction(action)

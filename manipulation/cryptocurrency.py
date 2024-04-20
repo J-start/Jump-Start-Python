@@ -1,7 +1,7 @@
 from api.consumeApi import *
 from api.consumeGoogleSheets import *
 
-def cripto(crypto):
+def getCripto(crypto):
 
     response = getApiCrypto(crypto)
     if response.status_code == 200:
@@ -33,10 +33,8 @@ def cripto(crypto):
     #print("coin: ",crypto,"high :",high,"low :",low,"vol :",vol,"last :",last,"buy :",buy,"sell :",sell,"date :",date,"open :",open)
 
 def getAndPrintAllCryptos():
-    cryptos = ["BTC","LTC","ETH","UIO","XRP","BCH","USDT","LINK","DOGE","ADA","EOS","XLM","CHZ","AXS"]
-    index =1
+    cryptos = ["BTC","LTC","ETH","XRP","BCH","USDT","LINK","DOGE","ADA","EOS","XLM","CHZ","AXS"]
     for crypto in cryptos:
-        index +=1
         print("--------Crypto-------")
-        cripto(crypto)
+        getCripto(crypto)
         print("--------Crypto-------")
