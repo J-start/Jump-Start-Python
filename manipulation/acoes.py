@@ -13,20 +13,19 @@ def fetchInformationAction(action):
 
     data = yf.download(action, start=dateFormated, progress=False)
     if len(data.values) != 0:
-            date = getDateActual()
-            open = data.values[0][0].round(4)
-            high = data.values[0][1].round(4)
-            low = data.values[0][2].round(4)
-            close = data.values[0][3].round(4)
-            volume = data.values[0][5].round(0)
-    try:
-        insertDatasActions(action,date,open,high,low,close,volume)
-    except:
-        #TODO - insert log
-        print("erro")
-            
-    else:
-            
+        date = getDateActual()
+        open = data.values[0][0].round(4)
+        high = data.values[0][1].round(4)
+        low = data.values[0][2].round(4)
+        close = data.values[0][3].round(4)
+        volume = data.values[0][5].round(0)
+        try:
+            insertDatasActions(action,date,open,high,low,close,volume)
+        except:
+            #TODO - insert log
+            print("erro")
+    else:    
+        # TODO - handle the case when len(data.values) is 0
         manipluationErrorGetCryptos(action,"400")
     
 def fetchAllInformationActions():
