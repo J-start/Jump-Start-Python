@@ -11,8 +11,42 @@ def insertDatasSelic(date,value):
 
     print(mycursor.rowcount, "record inserted.")
 
+def insertDatasCrypto(name,date,high,low,vol,last,sell,buy):
+    mydb = mysql.connector.connect(host="localhost",user="root",password="",database="jumpStart")
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO tb_crypto (name, date,high,low,vol,last,sell,buy) VALUES (%s, %s,%s, %s,%s, %s,%s, %s)"
+    val = (name,date,high,low,vol,last,sell,buy)
+    mycursor.execute(sql, val)
+
+    mydb.commit()
+
+    print(mycursor.rowcount, "record inserted.")
+
+def insertDatasCoins(name,date,high,low,bid,ask):
+    mydb = mysql.connector.connect(host="localhost",user="root",password="",database="jumpStart")
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO tb_coins (name, date,high,low,bid,ask) VALUES (%s, %s,%s, %s,%s, %s)"
+    val = (name,date,high,low,bid,ask)
+    mycursor.execute(sql, val)
+
+    mydb.commit()
+
+    print(mycursor.rowcount, "record inserted.")
+
+def insertDatasActions(name,date,open,high,low,close,volume):
+    mydb = mysql.connector.connect(host="localhost",user="root",password="",database="jumpStart")
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO tb_acoes (name, date,open,high,low,close,volume) VALUES (%s, %s,%s, %s,%s, %s,%s)"
+    val = (name,date,open,high,low,close,volume)
+    mycursor.execute(sql, val)
+
+    mydb.commit()
+
+    print(mycursor.rowcount, "record inserted.")   
+
+
 def main():
-    insertDatasSelic("2024-04-22",5.25)
+    insertDatasCrypto("teste","2024-04-22",5.25,5.25,5.25,5.25,5.25,5.25)
 
 if __name__ == "__main__":
     main()

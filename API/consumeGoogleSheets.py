@@ -4,7 +4,7 @@ load_dotenv()
 import os
 from datetime import datetime
 
-def insertDatasCoins(datas):
+def insertErrorGoogleSheets(datas):
     dateActual = datetime.now()
     datas.update({"Data": dateActual})
     

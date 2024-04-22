@@ -3,12 +3,14 @@ from api.consumeGoogleSheets import *
 from dataBase.insertDatas import *
 from datetime import datetime
 
-def getSelic():
+def manipulationSelic():
     request = getApiSelic()
     if request.status_code == 200:
         resp = request.json()
+        
         value = round(float(resp[0]['valor']),4)
-        dateActual = generatedDateActual()
+        dateActual = convertDateApiToDateDataBase(resp[0]['data'])
+        
         try:
             insertDatasSelic(dateActual,value)
         except:
@@ -20,13 +22,14 @@ def getSelic():
                 "Ativo": "Selic",
                 "Status": request.status_code
                 }
-        insertDatasCoins(dados)
+        insertErrorGoogleSheets(dados)
         return "erro"
     
-def generatedDateActual():
-   dataActual = datetime.now() 
-   dateFormated = dataActual.strftime('%Y-%m-%d')
-   return dateFormated
+def convertDateApiToDateDataBase(dateApi):
+    dateApiToConvert = datetime.strptime(dateApi, '%d/%m/%Y')
+    dateFormated = dateApiToConvert.strftime('%Y-%m-%d')
+
+    return dateFormated
 
 
 # print("-------- selic ------")
