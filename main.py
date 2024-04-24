@@ -1,12 +1,13 @@
 from api.scheduleConsumeApi import *
-import threading
 from manipulation.coins import *
 from manipulation.selic import *
 from manipulation.cryptocurrency import *
 from manipulation.acoes import *
 from api.consumeGoogleSheets import *
 from dataBase.insertDatas import *
+from dataBase.updateDatas import *
 import time
+import threading
 
 inicio = time.time()
 

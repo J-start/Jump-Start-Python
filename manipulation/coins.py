@@ -1,6 +1,7 @@
 from api.consumeApi import getApiCoins
 from api.consumeGoogleSheets import *
 from dataBase.insertDatas import *
+from dataBase.updateDatas import *
 
 def getCoin(coin):
     request = getApiCoins(coin)
@@ -29,9 +30,14 @@ def getAllCoinsAndPrint():
             date = convertDateApi(int(response['timestamp']))
         try:    
             insertDatasCoins(coin,date,high,low,bid,ask)
+
         except:
             #TODO - insert log
             print("erro")
+    try:
+        manipulationCoins()
+    except:
+        print("erro manipulationCoins")
 
 
 def manipluationErrorGetCryptos(crypto,status):

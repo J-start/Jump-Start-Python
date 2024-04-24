@@ -9,7 +9,6 @@ def insertDatasSelic(date,value):
 
     mydb.commit()
 
-    print(mycursor.rowcount, "record inserted.")
 
 def insertDatasCrypto(name,date,high,low,vol,last,sell,buy):
     mydb = mysql.connector.connect(host="localhost",user="root",password="",database="jumpStart")
@@ -20,7 +19,6 @@ def insertDatasCrypto(name,date,high,low,vol,last,sell,buy):
 
     mydb.commit()
 
-    print(mycursor.rowcount, "record inserted.")
 
 def insertDatasCoins(name,date,high,low,bid,ask):
     mydb = mysql.connector.connect(host="localhost",user="root",password="",database="jumpStart")
@@ -31,8 +29,6 @@ def insertDatasCoins(name,date,high,low,bid,ask):
 
     mydb.commit()
 
-    print(mycursor.rowcount, "record inserted.")
-
 def insertDatasActions(name,date,open,high,low,close,volume):
     mydb = mysql.connector.connect(host="localhost",user="root",password="",database="jumpStart")
     mycursor = mydb.cursor()
@@ -41,8 +37,6 @@ def insertDatasActions(name,date,open,high,low,close,volume):
     mycursor.execute(sql, val)
 
     mydb.commit()
-
-    print(mycursor.rowcount, "record inserted.")   
 
 
 def main():

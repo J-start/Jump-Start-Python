@@ -1,6 +1,7 @@
 from api.consumeApi import *
 from api.consumeGoogleSheets import *
 from dataBase.insertDatas import *
+from dataBase.updateDatas import *
 
 def getCripto(crypto):
 
@@ -8,7 +9,6 @@ def getCripto(crypto):
     if response.status_code == 200:
         resp = response.json()
         if resp != []:
-            print("------------------ \n")
             high = round(float(resp[0]['high']),4)
             low = round(float(resp[0]['low']),4)
             vol = round(float(resp[0]['vol']),4)
@@ -22,7 +22,7 @@ def getCripto(crypto):
                 insertDatasCrypto(crypto,date,high,low,vol,last,sell,buy)
             except:
                  #TODO - insert log
-                 print("erro")
+                 print("erro insertDatasCrypto")
 
         else:
             manipluationErrorGetCryptos(crypto,"400")
@@ -32,9 +32,11 @@ def getCripto(crypto):
 def getAndPrintAllCryptos():
     cryptos = ["BTC","LTC","ETH","XRP","BCH","USDT","LINK","DOGE","ADA","EOS","XLM","CHZ","AXS"]
     for crypto in cryptos:
-        print("--------Crypto-------")
         getCripto(crypto)
-        print("--------Crypto-------")
+    try:
+        manipulationCryptos()
+    except:
+        print("erro manipulationCryptos")
 
 def manipluationErrorGetCryptos(crypto,status):
      datas = {

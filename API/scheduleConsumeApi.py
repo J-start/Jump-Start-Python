@@ -17,7 +17,7 @@ def executeScheduleCoin():
 
 def scheduleSelic():
     scheduler.enter(900, 1, scheduleSelic)
-    getSelic()
+    manipulationSelic()
 
 def executeScheduleSelic():
     scheduleSelic()

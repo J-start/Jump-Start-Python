@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from api.consumeGoogleSheets import *
 from datetime import datetime
 from dataBase.insertDatas import *
+from dataBase.updateDatas import *
 
 dateActual = datetime.now()
 dateBeforeActual = dateActual - timedelta(days=1)
@@ -22,7 +23,7 @@ def fetchInformationAction(action):
         try:
             insertDatasActions(action,date,open,high,low,close,volume)
         except:
-            #TODO - insert log
+            # TODO - handle the exception
             print("erro")
     else:    
         # TODO - handle the case when len(data.values) is 0
@@ -32,8 +33,12 @@ def fetchAllInformationActions():
     actions = ["PETR4.SA","BBAS3.SA","ITSA4.SA","TRPL4.SA","VALE3.SA","CMIG4.SA","SANB11.SA","USIM5.SA","ABEV3.SA","MGLU3.SA"]
     #
     for action in actions:
-        print("----------- ACOES ----------")
         fetchInformationAction(action)
+    try:
+        manipulationAcoes()
+    except Exception as e:
+        # TODO - handle the exception
+        print("Erro ao manipular acoes, verificação de exclusão:", str(e))
 
 
 def manipluationErrorGetCryptos(crypto,status):

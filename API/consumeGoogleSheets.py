@@ -11,7 +11,5 @@ def insertErrorGoogleSheets(datas):
     url = os.environ["url"]
     
     response = requests.post(url, data=datas)
-    if response.status_code == 200:
-        print("Requisição POST bem-sucedida!")
-    else:
-        print("Erro na requisição:", response.status_code)
+    if response.status_code != 200:
+        print("Erro na requisição google sheets:", response.status_code)

@@ -2,6 +2,7 @@ from api.consumeApi import *
 from api.consumeGoogleSheets import *
 from dataBase.insertDatas import *
 from datetime import datetime
+from dataBase.updateDatas import *
 
 def manipulationSelic():
     request = getApiSelic()
@@ -13,6 +14,10 @@ def manipulationSelic():
         
         try:
             insertDatasSelic(dateActual,value)
+            try:
+                manipulationSelicDeleteDatas()
+            except:
+                print("erro manipulationSelic")
         except:
             print("erro")
             #TODO - insert log    

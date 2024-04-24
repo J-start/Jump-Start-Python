@@ -1,14 +1,34 @@
 import mysql.connector
 
+
+
 def getCountAsset(table,asset):
     mydb = mysql.connector.connect(host="localhost",user="root",password="",database="jumpStart")
     mycursor = mydb.cursor()
-
+    
     mycursor.execute(f"SELECT COUNT(*) AS total FROM {table} WHERE name = '{asset}'")
 
     countDataBase = mycursor.fetchone()
     return countDataBase[0]
 
+def getCountSelic():
+    mydb = mysql.connector.connect(host="localhost",user="root",password="",database="jumpStart")
+    mycursor = mydb.cursor()
+
+    mycursor.execute("SELECT COUNT(*) AS total FROM tb_selic")
+
+    countDataBase = mycursor.fetchone()
+    return countDataBase[0]
+
+def getIdToDeleteSelic():
+    mydb = mysql.connector.connect(host="localhost",user="root",password="",database="jumpStart")
+    mycursor = mydb.cursor()
+
+    mycursor.execute("SELECT id FROM tb_selic LIMIT 1")
+
+    idCrypto = mycursor.fetchone()
+
+    return idCrypto[0]
 
 def getIdToDeleteAsset(table,asset):
     mydb = mysql.connector.connect(host="localhost",user="root",password="",database="jumpStart")
@@ -28,14 +48,15 @@ def deleteAssets(table,asset):
 
     placeholders = ', '.join(['%s'] * len(asset))
     query = query % placeholders
-    mycursor.execute(query, asset)
-    mydb.commit()
-
-    print(f"{mycursor.rowcount} linhas excluídas")
-
+    try:
+        mycursor.execute(query, asset)
+        mydb.commit()
+    except Exception as e:
+        message= f"Erro: ",e,"Deletando dados da tabela {table} e asset {asset}"
+        print(message)
 
 def fetchPossiblesIdsToDelete(table,asset,idToDelete):
-        N=1
+        N = 1
         countCrypto = getCountAsset(table,asset)
         if countCrypto > N:
             idCrypto = getIdToDeleteAsset(table,asset)
@@ -61,8 +82,15 @@ def manipulationCoins():
     coins = ["AED","ARS","AUD","BOB","CAD","CHF","CLP","CNY","COP","DKK","EUR","GBP","HKD","ILS","INR","JPY","MXN","NOK","NZD","PEN","PLN","PYG","RUB","SAR","SEK","SGD","THB","TRY","TWD","USD","USDT","UYU","VEF","XRP","ZAR"]
     fetchEachAsset("tb_coins",coins)
 
+def manipulationSelicDeleteDatas():
+    N = 1
+    countSelic = getCountSelic()
+    if countSelic > N:
+        idToDelete = getIdToDeleteSelic()
+        deleteAssets("tb_selic",[idToDelete])
+
 def main():
-    manipulationCryptos()
+    manipulationSelicDeleteDatas()
 
 if __name__ == "__main__":
     main()
