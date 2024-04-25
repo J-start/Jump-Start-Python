@@ -10,7 +10,7 @@ dateBeforeActual = dateActual - timedelta(days=1)
 
 dateFormated = dateBeforeActual.strftime('%Y-%m-%d')
 
-def fetchInformationAction(action):
+def fetchInformationAction(dataBase,action):
 
     data = yf.download(action, start=dateFormated, progress=False)
     if len(data.values) != 0:
@@ -21,7 +21,7 @@ def fetchInformationAction(action):
         close = data.values[0][3].round(4)
         volume = data.values[0][5].round(0)
         try:
-            insertDatasActions(action,date,open,high,low,close,volume)
+            insertDatasActions(dataBase,action,date,open,high,low,close,volume)
         except:
             # TODO - handle the exception
             print("erro")
@@ -29,13 +29,13 @@ def fetchInformationAction(action):
         # TODO - handle the case when len(data.values) is 0
         manipluationErrorGetCryptos(action,"400")
     
-def fetchAllInformationActions():
+def fetchAllInformationActions(dataBase):
     actions = ["PETR4.SA","BBAS3.SA","ITSA4.SA","TRPL4.SA","VALE3.SA","CMIG4.SA","SANB11.SA","USIM5.SA","ABEV3.SA","MGLU3.SA"]
     #
     for action in actions:
-        fetchInformationAction(action)
+        fetchInformationAction(dataBase,action)
     try:
-        manipulationAcoes()
+        manipulationAcoes(dataBase)
     except Exception as e:
         # TODO - handle the exception
         print("Erro ao manipular acoes, verificação de exclusão:", str(e))

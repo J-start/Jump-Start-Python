@@ -4,7 +4,7 @@ from dataBase.insertDatas import *
 from datetime import datetime
 from dataBase.updateDatas import *
 
-def manipulationSelic():
+def manipulationSelic(dataBase):
     request = getApiSelic()
     if request.status_code == 200:
         resp = request.json()
@@ -13,9 +13,9 @@ def manipulationSelic():
         dateActual = convertDateApiToDateDataBase(resp[0]['data'])
         
         try:
-            insertDatasSelic(dateActual,value)
+            insertDatasSelic(dataBase,dateActual,value)
             try:
-                manipulationSelicDeleteDatas()
+                manipulationSelicDeleteDatas(dataBase)
             except:
                 print("erro manipulationSelic")
         except:

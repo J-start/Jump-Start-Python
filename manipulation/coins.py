@@ -16,7 +16,7 @@ def getCoin(coin):
         manipluationErrorGetCryptos(coin,request.status_code)
         return "erro"
     
-def getAllCoinsAndPrint():
+def getAllCoinsAndPrint(dataBase):
     coins = ["AED","ARS","AUD","BOB","CAD","CHF","CLP","CNY","COP","DKK","EUR","GBP","HKD","ILS","INR","JPY","MXN","NOK","NZD","PEN","PLN","PYG","RUB","SAR","SEK","SGD","THB","TRY","TWD","USD","USDT","UYU","VEF","XRP","ZAR"]
     #,"ARS","AUD","BOB","CAD","CHF","CLP","CNY","COP","DKK","EUR","GBP","HKD","ILS","INR","JPY","MXN","NOK","NZD","PEN","PLN","PYG","RUB","SAR","SEK","SGD","THB","TRY","TWD","USD","USDT","UYU","VEF","XRP","ZAR"
     for coin in coins:
@@ -29,13 +29,13 @@ def getAllCoinsAndPrint():
             ask=round(float(response['ask']),4)
             date = convertDateApi(int(response['timestamp']))
         try:    
-            insertDatasCoins(coin,date,high,low,bid,ask)
+            insertDatasCoins(dataBase,coin,date,high,low,bid,ask)
 
         except:
             #TODO - insert log
             print("erro")
     try:
-        manipulationCoins()
+        manipulationCoins(dataBase)
     except:
         print("erro manipulationCoins")
 

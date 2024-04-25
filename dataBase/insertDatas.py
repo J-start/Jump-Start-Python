@@ -1,7 +1,7 @@
 import mysql.connector
 
-def insertDatasSelic(date,value):
-    mydb = mysql.connector.connect(host="localhost",user="root",password="",database="jumpStart")
+def insertDatasSelic(dataDase,date,value):
+    mydb = mysql.connector.connect(host="localhost",user="root",password="",database=dataDase)
     mycursor = mydb.cursor()
     sql = "INSERT INTO tb_selic (date, value) VALUES (%s, %s)"
     val = (date, value)
@@ -10,8 +10,8 @@ def insertDatasSelic(date,value):
     mydb.commit()
 
 
-def insertDatasCrypto(name,date,high,low,vol,last,sell,buy):
-    mydb = mysql.connector.connect(host="localhost",user="root",password="",database="jumpStart")
+def insertDatasCrypto(dataDase,name,date,high,low,vol,last,sell,buy):
+    mydb = mysql.connector.connect(host="localhost",user="root",password="",database=dataDase)
     mycursor = mydb.cursor()
     sql = "INSERT INTO tb_crypto (name, date,high,low,vol,last,sell,buy) VALUES (%s, %s,%s, %s,%s, %s,%s, %s)"
     val = (name,date,high,low,vol,last,sell,buy)
@@ -20,8 +20,8 @@ def insertDatasCrypto(name,date,high,low,vol,last,sell,buy):
     mydb.commit()
 
 
-def insertDatasCoins(name,date,high,low,bid,ask):
-    mydb = mysql.connector.connect(host="localhost",user="root",password="",database="jumpStart")
+def insertDatasCoins(dataDase,name,date,high,low,bid,ask):
+    mydb = mysql.connector.connect(host="localhost",user="root",password="",database=dataDase)
     mycursor = mydb.cursor()
     sql = "INSERT INTO tb_coins (name, date,high,low,bid,ask) VALUES (%s, %s,%s, %s,%s, %s)"
     val = (name,date,high,low,bid,ask)
@@ -29,8 +29,8 @@ def insertDatasCoins(name,date,high,low,bid,ask):
 
     mydb.commit()
 
-def insertDatasActions(name,date,open,high,low,close,volume):
-    mydb = mysql.connector.connect(host="localhost",user="root",password="",database="jumpStart")
+def insertDatasActions(dataDase,name,date,open,high,low,close,volume):
+    mydb = mysql.connector.connect(host="localhost",user="root",password="",database=dataDase)
     mycursor = mydb.cursor()
     sql = "INSERT INTO tb_acoes (name, date,open,high,low,close,volume) VALUES (%s, %s,%s, %s,%s, %s,%s)"
     val = (name,date,open,high,low,close,volume)

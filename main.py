@@ -8,24 +8,24 @@ from dataBase.insertDatas import *
 
 import time
 import threading
-from tests.testsMain import *
+
 
 inicio = time.time()
-a()
-# thread_coin = threading.Thread(target=getAllCoinsAndPrint)
-# thread_selic = threading.Thread(target=manipulationSelic)
-# thread_crypto = threading.Thread(target=getAndPrintAllCryptos)
-# thread_action = threading.Thread(target=fetchAllInformationActions)
 
-# thread_coin.start()
-# thread_selic.start()
-# thread_crypto.start()
-# thread_action.start()
+thread_coin = threading.Thread(target=getAllCoinsAndPrint("jumpstart"))
+thread_selic = threading.Thread(target=manipulationSelic("jumpstart"))
+thread_crypto = threading.Thread(target=getAndPrintAllCryptos("jumpstart"))
+thread_action = threading.Thread(target=fetchAllInformationActions("jumpstart"))
 
-# thread_coin.join()
-# thread_selic.join()
-# thread_crypto.join()
-# thread_action.join()
+thread_coin.start()
+thread_selic.start()
+thread_crypto.start()
+thread_action.start()
+
+thread_coin.join()
+thread_selic.join()
+thread_crypto.join()
+thread_action.join()
 
 #getAllCoinsAndPrint()
 #manipulationSelic()
