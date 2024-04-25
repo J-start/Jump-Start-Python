@@ -11,40 +11,50 @@ def shouldInsertOneDataSelic():
     createTableSelic("jumpStartTest")
     insertNValuesSelic()
     count=countSelic2("jumpStartTest")
-    verifyTest(count,"selic")
+    result=verifyTest(count,"selic")
     deleteDataBase()
+    return result
 
 def shouldInsertOneDataAcoes():
     createDataBaseTest()
     createTableActions("jumpStartTest")
     insertNValuesAcoes()
     count=countAssets("jumpStartTest","tb_acoes","TRPL4.SA")
-    verifyTest(count,"acao")
+    result = verifyTest(count,"acao")
     deleteDataBase()
+    return result
 
 def shouldInsertOneDataCoins():
     createDataBaseTest()
     createTableCoins("jumpStartTest")
     insertNValuesCoins()
     count=countAssets("jumpStartTest","tb_coins","CAD")
-    verifyTest(count,"coin")
+    result=verifyTest(count,"coin")
     deleteDataBase()
+    return result
 
 def shouldInsertOneDataCrypto():
     createDataBaseTest()
     createTableCryptos("jumpStartTest")
     insertNValuesCrypto()
     count=countAssets("jumpStartTest","tb_crypto","BTC")
-    verifyTest(count,"crypto")
+    result=verifyTest(count,"crypto")
     deleteDataBase()
+    return result
 
 
 def verifyTest(count,asset):
     try:
         assert count == 1, "Should be 1"
+        print("\n")
         print(f"Passou!!!!!-{asset}")
+        print("\n")
+        return True
     except AssertionError:
-            print(f"Falhou!!!!!-{asset}")
+        print("\n")
+        print(f"Falhou!!!!!-{asset}")
+        print("\n")
+        return False
     
 def insertNValuesSelic():
     for i in range(3):
@@ -57,7 +67,6 @@ def insertNValuesAcoes():
 def insertNValuesCoins():
     for i in range(3):
         getAllCoinsAndPrint("jumpStartTest")
-
 
 def insertNValuesCrypto():
     for i in range(3):
