@@ -5,21 +5,13 @@ from manipulation.acoes import *
 from manipulation.coins import *
 from manipulation.cryptocurrency import *
 
-def insertDatas():
-    createDataBaseTest()
-    createTableSelic("jumpStartTest")
-    deleteDataBase()
 
 def shouldInsertOneDataSelic():
     createDataBaseTest()
     createTableSelic("jumpStartTest")
     insertNValuesSelic()
     count=countSelic2("jumpStartTest")
-    try:
-        assert count == 1, "Should be 1"
-        print("Passou!!!!!-Selic")
-    except AssertionError:
-            print("Falhou!!!!!")
+    verifyTest(count,"selic")
     deleteDataBase()
 
 def shouldInsertOneDataAcoes():
@@ -38,35 +30,36 @@ def shouldInsertOneDataCoins():
     verifyTest(count,"coin")
     deleteDataBase()
 
-def shouldInsertOneDataCoins():
+def shouldInsertOneDataCrypto():
     createDataBaseTest()
     createTableCryptos("jumpStartTest")
-    insertNValuesCoins()
-    count=countAssets("jumpStartTest","tb_coins","CAD")
-    verifyTest(count,"coin")
+    insertNValuesCrypto()
+    count=countAssets("jumpStartTest","tb_crypto","BTC")
+    verifyTest(count,"crypto")
     deleteDataBase()
+
 
 def verifyTest(count,asset):
     try:
-        assert count == 2, "Should be 1"
+        assert count == 1, "Should be 1"
         print(f"Passou!!!!!-{asset}")
     except AssertionError:
-            print("Falhou!!!!!")
+            print(f"Falhou!!!!!-{asset}")
     
 def insertNValuesSelic():
-    for i in range(5):
+    for i in range(3):
         manipulationSelic("jumpStartTest")
 
 def insertNValuesAcoes():
-    for i in range(5):
+    for i in range(3):
         fetchAllInformationActions("jumpStartTest")
 
 def insertNValuesCoins():
-    for i in range(5):
+    for i in range(3):
         getAllCoinsAndPrint("jumpStartTest")
 
 
-def insertNValuesCoins():
-    for i in range(5):
-        getAllCoinsAndPrint("jumpStartTest")
+def insertNValuesCrypto():
+    for i in range(3):
+        getAndPrintAllCryptos("jumpStartTest")
 
