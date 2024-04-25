@@ -1,6 +1,7 @@
 from dataBase.manipulationDataBase import *  # Importa módulos do pacote dataBase
 from teste.dataBaseTests.manipulationDataBase import *
 from manipulation.selic import *  # Importa módulos do pacote manipulation
+from manipulation.acoes import *
 
 def insertDatas():
     createDataBaseTest()
@@ -11,14 +12,34 @@ def shouldInsertOneDataSelic():
     createDataBaseTest()
     createTableSelic("jumpStartTest")
     insertNValuesSelic()
-    countSelic=countSelic2("jumpStartTest")
+    count=countSelic2("jumpStartTest")
     try:
-        assert countSelic == 1, "Should be 1"
+        assert count == 1, "Should be 1"
         print("Passou!!!!!-Selic")
     except AssertionError:
             print("Falhou!!!!!")
     deleteDataBase()
 
+def shouldInsertOneDataAcoes():
+    createDataBaseTest()
+    createTableActions("jumpStartTest")
+    insertNValuesAcoes()
+    count=countAssets("jumpStartTest","tb_acoes","TRPL4.SA")
+    verifyTest(count,"acao")
+    deleteDataBase()
+
+def verifyTest(count,asset):
+    try:
+        assert count == 1, "Should be 1"
+        print(f"Passou!!!!!-{asset}")
+    except AssertionError:
+            print("Falhou!!!!!")
+    
 def insertNValuesSelic():
     for i in range(5):
         manipulationSelic("jumpStartTest")
+
+def insertNValuesAcoes():
+    for i in range(5):
+        fetchAllInformationActions("jumpStartTest")
+

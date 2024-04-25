@@ -14,11 +14,10 @@ def countAssets(dataBase,table,asset):
     mydb = mysql.connector.connect(host="localhost",user="root",password="",database=dataBase)
     mycursor = mydb.cursor()
 
-    mycursor.execute(f"SELECT id FROM {table} WHERE name = '{asset}' LIMIT 1")
+    mycursor.execute(f"SELECT COUNT(*) AS total FROM {table} WHERE name = '{asset}' LIMIT 1")
 
-    idCrypto = mycursor.fetchone()
-
-    return idCrypto[0]
+    countDataBase = mycursor.fetchone()
+    return countDataBase[0]
 
 def countSelic2(dataBase):
     mydb = mysql.connector.connect(host="localhost",user="root",password="",database=dataBase)
