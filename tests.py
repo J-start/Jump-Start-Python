@@ -1,12 +1,14 @@
 from dataBase.updateDatas import *
 from teste.testsMain import *
+from teste.enumAssets import *
 import sys
 import time
+from colorama import Fore, Style
 
 def progress_bar(progress):
     bar_length = 50
     block = int(round(bar_length * progress))
-    text = "\rProgresso: [{0}] {1:.2f}%".format("#" * block + "-" * (bar_length - block), progress * 100)
+    text = "Progresso: [{0}] {1:.2f}%".format("#" * block + "-" * (bar_length - block), progress * 100)
     sys.stdout.write(text)
     sys.stdout.flush()
 
@@ -38,7 +40,7 @@ if shouldInsertOneDataCrypto():
 index=1
 progress_bar(index)
 
-print("\nTestes finalizados")
-print(f"Resumo : Testes passados: {passed}/4")
+print(Fore.YELLOW+"\nTestes finalizados"+Style.RESET_ALL)
+print(Fore.BLUE+f"Resumo: {passed}/4"+Style.RESET_ALL)
 
 
