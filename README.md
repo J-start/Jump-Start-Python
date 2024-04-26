@@ -17,7 +17,7 @@
 ## Executar a aplicação
 ### `python -u main.py`
 ## Executar os testes
-### `python -u testes.py`
+### `python -u tests.py`
 ## Exemplo de log dos testes
 <p align="center">
   <img src="https://github.com/MarcosViniSil/jumpStart-baseDatas/blob/main/assets/images/testes.PNG" alt="testes-log">
