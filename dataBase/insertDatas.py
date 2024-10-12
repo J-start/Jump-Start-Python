@@ -1,4 +1,6 @@
 import mysql.connector
+from mypyc.crash import catch_errors
+
 
 def insertDatasSelic(dataDase,date,value):
     mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataDase)
@@ -20,13 +22,15 @@ def insertDatasCrypto(dataDase,name,date,high,low,vol,last,sell,buy):
     mydb.commit()
 
 
-def insertDatasCoins(dataDase,name,date,high,low,bid,ask):
-    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataDase)
+def insertDatasCoins(dataBase,name,date,high,low,bid,ask):
+    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataBase)
     mycursor = mydb.cursor()
     sql = "INSERT INTO tb_coins (name, date,high,low,bid,ask) VALUES (%s, %s,%s, %s,%s, %s)"
     val = (name,date,high,low,bid,ask)
-    mycursor.execute(sql, val)
-
+    try:
+        mycursor.execute(sql, val)
+    except Exception as e:
+        print("Erro inserção moedas. Erro:", e)
     mydb.commit()
 
 def insertDatasActions(dataDase,name,date,open,high,low,close,volume):

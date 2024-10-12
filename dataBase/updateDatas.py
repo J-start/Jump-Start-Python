@@ -3,7 +3,7 @@ import mysql.connector
 
 
 def getCountAsset(dataBase,table,asset):
-    mydb = mysql.connector.connect(host="localhost",user="root",password="",database=dataBase)
+    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataBase)
     mycursor = mydb.cursor()
     
     mycursor.execute(f"SELECT COUNT(*) AS total FROM {table} WHERE name = '{asset}'")
@@ -12,7 +12,7 @@ def getCountAsset(dataBase,table,asset):
     return countDataBase[0]
 
 def getCountSelic(dataBase):
-    mydb = mysql.connector.connect(host="localhost",user="root",password="",database=dataBase)
+    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataBase)
     mycursor = mydb.cursor()
 
     mycursor.execute("SELECT COUNT(*) AS total FROM tb_selic")
@@ -21,7 +21,7 @@ def getCountSelic(dataBase):
     return countDataBase[0]
 
 def getIdToDeleteSelic(dataBase):
-    mydb = mysql.connector.connect(host="localhost",user="root",password="",database=dataBase)
+    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataBase)
     mycursor = mydb.cursor()
 
     mycursor.execute("SELECT id FROM tb_selic LIMIT 1")
@@ -31,7 +31,7 @@ def getIdToDeleteSelic(dataBase):
     return idCrypto[0]
 
 def getIdToDeleteAsset(dataBase,table,asset):
-    mydb = mysql.connector.connect(host="localhost",user="root",password="",database=dataBase)
+    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataBase)
     mycursor = mydb.cursor()
 
     mycursor.execute(f"SELECT id FROM {table} WHERE name = '{asset}' LIMIT 1")
@@ -41,7 +41,7 @@ def getIdToDeleteAsset(dataBase,table,asset):
     return idCrypto[0]
 
 def deleteAssets(dataBase,table,asset):
-    mydb = mysql.connector.connect(host="localhost",user="root",password="",database=dataBase)
+    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataBase)
     mycursor = mydb.cursor()
 
     query = f"DELETE FROM {table} WHERE id IN (%s)"
@@ -57,9 +57,10 @@ def deleteAssets(dataBase,table,asset):
 
 def fetchPossiblesIdsToDelete(dataBase,table,asset,idToDelete):
         N = 1
-        countAsset = getCountAsset(dataBase,table,asset)
-        print("count Assets \n",countAsset)
-        print("table \n", table)
+        try:
+            countAsset = getCountAsset(dataBase,table,asset)
+        except Exception as e:
+            print("foi na contagem", e)
         if countAsset > N:
             idCrypto = getIdToDeleteAsset(dataBase,table,asset)
             idToDelete.append(idCrypto)   
@@ -67,8 +68,12 @@ def fetchPossiblesIdsToDelete(dataBase,table,asset,idToDelete):
 
 def fetchEachAsset(dataBase,table,assets):
     idToDelete = []
+
     for asset in assets:
-        idToDelete=fetchPossiblesIdsToDelete(dataBase,table,asset,idToDelete)
+        try:
+            idToDelete=fetchPossiblesIdsToDelete(dataBase,table,asset,idToDelete)
+        except Exception as e:
+            print("foi aqui", e)
     if idToDelete != []:
         deleteAssets(dataBase,table,idToDelete)
 

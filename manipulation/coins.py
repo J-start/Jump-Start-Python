@@ -33,11 +33,11 @@ def getAllCoinsAndPrint(dataBase):
 
         except:
             #TODO - insert log
-            print("erro")
+            print("erro e")
     try:
         manipulationCoins(dataBase)
-    except:
-        print("erro manipulationCoins")
+    except Exception as e:
+        print("erro manipulationCoins ERRO:",e)
 
 
 def manipluationErrorGetCryptos(crypto,status):
