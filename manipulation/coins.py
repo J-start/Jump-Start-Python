@@ -1,5 +1,5 @@
-from api.consumeApi import getApiCoins
-from api.consumeGoogleSheets import *
+from API.consumeApi import getApiCoins
+from API.consumeGoogleSheets import *
 from dataBase.insertDatas import *
 from dataBase.updateDatas import *
 

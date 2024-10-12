@@ -1,7 +1,7 @@
 import mysql.connector
 
 def insertDatasSelic(dataDase,date,value):
-    mydb = mysql.connector.connect(host="localhost",user="root",password="",database=dataDase)
+    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataDase)
     mycursor = mydb.cursor()
     sql = "INSERT INTO tb_selic (date, value) VALUES (%s, %s)"
     val = (date, value)
@@ -11,7 +11,7 @@ def insertDatasSelic(dataDase,date,value):
 
 
 def insertDatasCrypto(dataDase,name,date,high,low,vol,last,sell,buy):
-    mydb = mysql.connector.connect(host="localhost",user="root",password="",database=dataDase)
+    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataDase)
     mycursor = mydb.cursor()
     sql = "INSERT INTO tb_crypto (name, date,high,low,vol,last,sell,buy) VALUES (%s, %s,%s, %s,%s, %s,%s, %s)"
     val = (name,date,high,low,vol,last,sell,buy)
@@ -21,7 +21,7 @@ def insertDatasCrypto(dataDase,name,date,high,low,vol,last,sell,buy):
 
 
 def insertDatasCoins(dataDase,name,date,high,low,bid,ask):
-    mydb = mysql.connector.connect(host="localhost",user="root",password="",database=dataDase)
+    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataDase)
     mycursor = mydb.cursor()
     sql = "INSERT INTO tb_coins (name, date,high,low,bid,ask) VALUES (%s, %s,%s, %s,%s, %s)"
     val = (name,date,high,low,bid,ask)
@@ -30,7 +30,7 @@ def insertDatasCoins(dataDase,name,date,high,low,bid,ask):
     mydb.commit()
 
 def insertDatasActions(dataDase,name,date,open,high,low,close,volume):
-    mydb = mysql.connector.connect(host="localhost",user="root",password="",database=dataDase)
+    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataDase)
     mycursor = mydb.cursor()
     sql = "INSERT INTO tb_acoes (name, date,open,high,low,close,volume) VALUES (%s, %s,%s, %s,%s, %s,%s)"
     val = (name,date,open,high,low,close,volume)

@@ -58,7 +58,8 @@ def deleteAssets(dataBase,table,asset):
 def fetchPossiblesIdsToDelete(dataBase,table,asset,idToDelete):
         N = 1
         countAsset = getCountAsset(dataBase,table,asset)
-        
+        print("count Assets \n",countAsset)
+        print("table \n", table)
         if countAsset > N:
             idCrypto = getIdToDeleteAsset(dataBase,table,asset)
             idToDelete.append(idCrypto)   

@@ -2,18 +2,24 @@ import mysql.connector
 
 
 def createConnection():
-    mydb = mysql.connector.connect(host="localhost",user="root",password="")
-    return mydb.cursor()
+    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret")
+    myCursor = mydb.cursor()
+    return "sucesso"
 
 def createDataBase():
-    mydb = mysql.connector.connect(host="localhost",user="root",password="")
+    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret")
     mycursor = mydb.cursor()
     mycursor.execute("CREATE DATABASE jumpStart")
 
+
 def createTableSelic(database):
-    mydb = mysql.connector.connect(host="localhost",user="root",password="",database=database)
+    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=database)
     mycursor = mydb.cursor()
+
     mycursor.execute("CREATE TABLE tb_selic (id INT AUTO_INCREMENT PRIMARY KEY, date DATE, value FLOAT)")
+    mycursor.execute("CREATE TABLE tb_crypto (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), date DATE, high FLOAT, low FLOAT, vol FLOAT, last FLOAT, sell FLOAT, buy FLOAT)")
+    mycursor.execute("CREATE TABLE tb_coins (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), date DATE, high FLOAT, low FLOAT, bid FLOAT, ask FLOAT)")
+    mycursor.execute("CREATE TABLE tb_acoes (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), date DATE,open FLOAT, high FLOAT, low FLOAT, close FLOAT, volume FLOAT)")
 
 def createTableCryptos(database):
     mydb = mysql.connector.connect(host="localhost",user="root",password="",database=database)
@@ -30,3 +36,9 @@ def createTableActions(database):
     mycursor = mydb.cursor()
     mycursor.execute("CREATE TABLE tb_acoes (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), date DATE,open FLOAT, high FLOAT, low FLOAT, close FLOAT, volume FLOAT)")    
 
+def main():
+    createDataBase()
+    createTableSelic("jumpStart")
+
+if __name__ == "__main__":
+    main()

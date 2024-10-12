@@ -1,6 +1,6 @@
 import yfinance as yf 
 from datetime import datetime, timedelta
-from api.consumeGoogleSheets import *
+from API.consumeGoogleSheets import *
 from datetime import datetime
 from dataBase.insertDatas import *
 from dataBase.updateDatas import *

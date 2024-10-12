@@ -14,10 +14,10 @@ TIMESCHEDULE = 1800
 def execute():
     begin = time.time()
 
-    thread_coin = threading.Thread(target=getAllCoinsAndPrint("jumpstart"))
-    thread_selic = threading.Thread(target=manipulationSelic("jumpstart"))
-    thread_crypto = threading.Thread(target=getAndPrintAllCryptos("jumpstart"))
-    thread_action = threading.Thread(target=fetchAllInformationActions("jumpstart"))
+    thread_coin = threading.Thread(target=getAllCoinsAndPrint("jumpStart"))
+    thread_selic = threading.Thread(target=manipulationSelic("jumpStart"))
+    thread_crypto = threading.Thread(target=getAndPrintAllCryptos("jumpStart"))
+    thread_action = threading.Thread(target=fetchAllInformationActions("jumpStart"))
 
     thread_coin.start()
     thread_selic.start()

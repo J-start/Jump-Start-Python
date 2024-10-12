@@ -1,5 +1,5 @@
-from api.consumeApi import *
-from api.consumeGoogleSheets import *
+from API.consumeApi import *
+from API.consumeGoogleSheets import *
 from dataBase.insertDatas import *
 from dataBase.updateDatas import *
 
