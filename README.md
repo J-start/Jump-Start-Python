@@ -20,5 +20,5 @@
 ### `python -u tests.py`
 ## Exemplo de log dos testes
 <p align="center">
-  <img src="assets/images/testes.PNG" alt="testes-log">
+  <img src="assets/images/testes.PNG" alt="testes-log-">
 </p>
