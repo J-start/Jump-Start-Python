@@ -17,8 +17,7 @@ def getCoin(coin):
         return "erro"
     
 def getAllCoinsAndPrint(dataBase):
-    coins = ["AED","ARS","AUD","BOB","CAD","CHF","CLP","CNY","COP","DKK","EUR","GBP","HKD","ILS","INR","JPY","MXN","NOK","NZD","PEN","PLN","PYG","RUB","SAR","SEK","SGD","THB","TRY","TWD","USD","USDT","UYU","VEF","XRP","ZAR"]
-    #,"ARS","AUD","BOB","CAD","CHF","CLP","CNY","COP","DKK","EUR","GBP","HKD","ILS","INR","JPY","MXN","NOK","NZD","PEN","PLN","PYG","RUB","SAR","SEK","SGD","THB","TRY","TWD","USD","USDT","UYU","VEF","XRP","ZAR"
+    coins = ["ARS","AUD","BOB","CAD","CHF","CLP","CNY","COP","DKK","EUR","HKD","INR","JPY","MXN","NOK","PYG","RUB","SEK","TWD","USD","UYU","VEF"]
     for coin in coins:
         
         response = getCoin(coin)
