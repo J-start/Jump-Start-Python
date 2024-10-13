@@ -35,7 +35,7 @@ def createTableActions(database):
 def createTableNews(database):
     mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=database)
     mycursor = mydb.cursor()
-    mycursor.execute("CREATE TABLE tb_news (id INT AUTO_INCREMENT PRIMARY KEY, news VARCHAR(10000))")
+    mycursor.execute("CREATE TABLE tb_news (id INT AUTO_INCREMENT PRIMARY KEY, news VARCHAR(10000), dateNews DATE)")
 
 def main():
     createTableNews("jumpStart")

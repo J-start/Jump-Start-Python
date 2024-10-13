@@ -1,5 +1,5 @@
 import mysql.connector
-from mypyc.crash import catch_errors
+from datetime import datetime
 
 
 def insertDatasSelic(dataDase,date,value):
@@ -43,11 +43,13 @@ def insertDatasActions(dataDase,name,date,open,high,low,close,volume):
     mydb.commit()
     
 def insertNews(dataDase,news):
+    dateActual = datetime.now()
+    dateFormatedSQL = dateActual.strftime('%Y-%m-%d')
     mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataDase)
     mycursor = mydb.cursor()
     mycursor.execute('''
-        INSERT INTO tb_news (news) VALUES (%s)
-    ''', (news,))
+        INSERT INTO tb_news (news,dateNews) VALUES (%s,%s)
+    ''', (news,dateFormatedSQL))
     mydb.commit()
 
 

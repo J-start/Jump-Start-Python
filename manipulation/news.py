@@ -2,18 +2,18 @@
 
 from GoogleNews import GoogleNews
 import random
-import datetime
+from datetime import datetime
 from API.consumeGoogleSheets import *
 from dataBase.insertDatas import *
 import json
 
-actions = ["PETR4.SA", "BBAS3.SA", "ITSA4.SA", "TRPL4.SA", "VALE3.SA", "CMIG4.SA", "SANB11.SA", "USIM5.SA","ABEV3.SA", "MGLU3.SA"]
-coins   = ["Peso Argentino", "Dólar Australiano", "Moeda Boliviano", "Dólar Canadense", "Franco Suíço ", "Peso Chileno","Yuan Chinês", "Peso Colombiano", "Coroa Dinamarquesa", "Euro", "Dólar de Hong Kong", "Rúpia Indiana","Iene Japonês", "Peso Mexicano", "Coroa Norueguesa","Guarani Paraguaio ", "Rublo Russo", "Coroa Sueca", "Dólar Taiuanês", "Dólar Americano ", "Peso Uruguaio","Bolívar Venezuelano"]
-cryptos = ["BTC", "LTC", "ETH", "XRP", "BCH", "USDT", "LINK", "DOGE", "ADA", "EOS", "XLM", "CHZ", "AXS"]
+actions  = ["PETR4.SA", "BBAS3.SA", "ITSA4.SA", "TRPL4.SA", "VALE3.SA", "CMIG4.SA", "SANB11.SA", "USIM5.SA","ABEV3.SA", "MGLU3.SA"]
+coins    = ["moeda Peso Argentino", "moeda Dólar Australiano", "Moeda Boliviano", "moeda Dólar Canadense", "moeda Franco Suíço ", "moeda Peso Chileno","Yuan Chinês", "moeda Peso Colombiano", "moeda Coroa Dinamarquesa", "moeda Euro", "moeda Dólar de Hong Kong", "moeda Rúpia Indiana","moeda Iene Japonês", "moeda Peso Mexicano", "moeda Coroa Norueguesa","moeda Guarani Paraguaio ", "moeda Rublo Russo", "moeda Coroa Sueca", "moeda Dólar Taiuanês", "moeda Dólar Americano ", "moeda Peso Uruguaio","moeda Bolívar Venezuelano"]
+cryptos  = ["BTC", "LTC", "ETH", "XRP", "BCH", "USDT", "LINK", "DOGE", "ADA", "EOS", "XLM", "CHZ", "AXS"]
 
-CRYPTO  = random.randint(0, 12)
-COINS   = random.randint(0, 21)
-ACTIONS = random.randint(0, 9)
+CRYPTO   = random.randint(0, len(cryptos) - 1)
+COINS    = random.randint(0, len(coins) - 1)
+ACTIONS  = random.randint(0, len(actions) - 1)
 
 DATABASE = "jumpStart"
 
@@ -26,8 +26,14 @@ def fetchNews(messageToSearch,index):
     googlenews.set_encode('utf-8')
     try:
         googlenews.search(messageToSearch)
-    except:
-        print("erro")
+    except Exception as e:
+        datas = {
+            "Data": "",
+            "Ativo": "Erro ao buscar noticia, google news ",
+            "Status": e
+        }
+        insertErrorGoogleSheets(datas)
+        return []
     googlenews.get_page(1)
     news = googlenews.get_texts()
     return news[index]
@@ -35,7 +41,8 @@ def fetchNews(messageToSearch,index):
 
 def makeRequests(context):
     convertDays = {0: 0, 1: 3, 2: 6,3: 9, 4: 12, 5: 15, 6: 18}
-    numberDayWeek = datetime.datetime.now().weekday()
+
+    numberDayWeek = datetime.now().weekday()
 
     startNews = convertDays[numberDayWeek]
     limitNews = startNews + 2
@@ -60,10 +67,11 @@ def buildJsonBasedContext(listAsset,assetToSearch,assetKeyJson):
     except Exception as e:
         datas = {
             "Data": "",
-            "Crypto": assetKeyJson + ' -> google news ' +  listAsset[assetToSearch],
+            "Ativo": assetKeyJson + ' -> google news ' +  listAsset[assetToSearch],
             "Status": e
         }
         insertErrorGoogleSheets(datas)
+        print(e)
         return json_data
 
 
@@ -77,24 +85,23 @@ def buildJsonSelic():
     except Exception as e:
         datas = {
             "Data": "",
-            "Crypto":"selic-google news",
+            "Ativo":"selic-google news",
             "Status": e
         }
         insertErrorGoogleSheets(datas)
-
+        print(e)
         return json_data
 
 def insertInDataBase():
     json_data = []
-    if buildJsonBasedContext(cryptos, CRYPTO, "CRYPTO"):
-        json_data += buildJsonBasedContext(cryptos, CRYPTO, "CRYPTO")
-    if buildJsonBasedContext(actions, ACTIONS, "Ação"):
-        json_data += buildJsonBasedContext(actions, ACTIONS, "Ação")
-    if buildJsonBasedContext(coins, COINS, "MOEDA"):
-        json_data += buildJsonBasedContext(coins, COINS, "MOEDA")
-    if buildJsonSelic():
-        json_data += buildJsonSelic()
+
+    json_data += buildJsonBasedContext(cryptos, CRYPTO, "CRYPTO")
+    json_data += buildJsonBasedContext(actions, ACTIONS, "AÇÃO")
+    json_data += buildJsonBasedContext(coins, COINS, "MOEDA")
+    json_data += buildJsonSelic()
+
     json_string = json.dumps(json_data, ensure_ascii=False, indent=4)
+
     insertNews(DATABASE, json_string)
 
 
@@ -106,4 +113,3 @@ if __name__ == "__main__":
 
 
 
-#datas[i] except Exception as e: makeRequests(actions[ACTIONS])
