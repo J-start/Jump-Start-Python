@@ -30,14 +30,15 @@ def createTableCoins(database):
 def createTableActions(database):
     mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=database)
     mycursor = mydb.cursor()
-    mycursor.execute("CREATE TABLE tb_acoes (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), date DATE,open FLOAT, high FLOAT, low FLOAT, close FLOAT, volume FLOAT)")    
+    mycursor.execute("CREATE TABLE tb_acoes (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), date DATE,open FLOAT, high FLOAT, low FLOAT, close FLOAT, volume FLOAT)")
+
+def createTableNews(database):
+    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=database)
+    mycursor = mydb.cursor()
+    mycursor.execute("CREATE TABLE tb_news (id INT AUTO_INCREMENT PRIMARY KEY, news VARCHAR(10000))")
 
 def main():
-
-    createTableSelic("jumpStart")
-    createTableCryptos("jumpStart")
-    createTableCoins("jumpStart")
-    createTableActions("jumpStart")
+    createTableNews("jumpStart")
 
 if __name__ == "__main__":
     main()

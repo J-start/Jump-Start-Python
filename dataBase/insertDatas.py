@@ -41,6 +41,14 @@ def insertDatasActions(dataDase,name,date,open,high,low,close,volume):
     mycursor.execute(sql, val)
 
     mydb.commit()
+    
+def insertNews(dataDase,news):
+    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataDase)
+    mycursor = mydb.cursor()
+    mycursor.execute('''
+        INSERT INTO tb_news (news) VALUES (%s)
+    ''', (news,))
+    mydb.commit()
 
 
 def main():
