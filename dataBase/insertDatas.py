@@ -5,7 +5,7 @@ from datetime import datetime
 def insertDatasSelic(dataDase,date,value):
     mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataDase)
     mycursor = mydb.cursor()
-    sql = "INSERT INTO tb_selic (date, value) VALUES (%s, %s)"
+    sql = "INSERT INTO tb_selic (dateSelic, valueSelic) VALUES (%s, %s)"
     val = (date, value)
     mycursor.execute(sql, val)
 
@@ -15,7 +15,7 @@ def insertDatasSelic(dataDase,date,value):
 def insertDatasCrypto(dataDase,name,date,high,low,vol,last,sell,buy):
     mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataDase)
     mycursor = mydb.cursor()
-    sql = "INSERT INTO tb_crypto (name, date,high,low,vol,last,sell,buy) VALUES (%s, %s,%s, %s,%s, %s,%s, %s)"
+    sql = "INSERT INTO tb_crypto (nameCrypto, date, highCrypto, lowCrypto, volCrypto, lastCrypto, sellCrypto, buyCrypto) VALUES (%s, %s,%s, %s,%s, %s,%s, %s)"
     val = (name,date,high,low,vol,last,sell,buy)
     mycursor.execute(sql, val)
 
@@ -25,7 +25,7 @@ def insertDatasCrypto(dataDase,name,date,high,low,vol,last,sell,buy):
 def insertDatasCoins(dataBase,name,date,high,low,bid,ask):
     mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataBase)
     mycursor = mydb.cursor()
-    sql = "INSERT INTO tb_coins (name, date,high,low,bid,ask) VALUES (%s, %s,%s, %s,%s, %s)"
+    sql = "INSERT INTO tb_coins (nameCoin, dateCoin, highCoin, lowCoin, bidCoin, askCoin) VALUES (%s, %s,%s, %s,%s, %s)"
     val = (name,date,high,low,bid,ask)
     try:
         mycursor.execute(sql, val)
@@ -36,7 +36,7 @@ def insertDatasCoins(dataBase,name,date,high,low,bid,ask):
 def insertDatasActions(dataDase,name,date,open,high,low,close,volume):
     mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataDase)
     mycursor = mydb.cursor()
-    sql = "INSERT INTO tb_acoes (name, date,open,high,low,close,volume) VALUES (%s, %s,%s, %s,%s, %s,%s)"
+    sql = "INSERT INTO tb_share (nameShare, dateShare, openShare, highShare, lowShare, closeShare, volumeShare) VALUES (%s, %s,%s, %s,%s, %s,%s)"
     val = (name,date,open,high,low,close,volume)
     mycursor.execute(sql, val)
 
@@ -48,8 +48,8 @@ def insertNews(dataDase,news):
     mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataDase)
     mycursor = mydb.cursor()
     mycursor.execute('''
-        INSERT INTO tb_news (news,dateNews) VALUES (%s,%s)
-    ''', (news,dateFormatedSQL))
+        INSERT INTO tb_news (news,dateNews,isApproved) VALUES (%s,%s,%s)
+    ''', (news,dateFormatedSQL,False))
     mydb.commit()
 
 

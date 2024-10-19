@@ -81,7 +81,7 @@ def countCoins():
 
 def countAcoes():
     actions = ["PETR4.SA","BBAS3.SA","ITSA4.SA","TRPL4.SA","VALE3.SA","CMIG4.SA","SANB11.SA","USIM5.SA","ABEV3.SA","MGLU3.SA"]
-    return verifyCountAsset(actions,"tb_acoes")
+    return verifyCountAsset(actions,"tb_share")
 
 def verifyCountAsset(listAssets,table):
     count = []

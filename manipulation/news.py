@@ -12,7 +12,7 @@ coins    = ["moeda Peso Argentino", "moeda Dólar Australiano", "Moeda Boliviano
 cryptos  = ["BTC", "LTC", "ETH", "XRP", "BCH", "USDT", "LINK", "DOGE", "ADA", "EOS", "XLM", "CHZ", "AXS"]
 
 CRYPTO   = random.randint(0, len(cryptos) - 1)
-COINS    = random.randint(0, len(coins) - 1)
+
 ACTIONS  = random.randint(0, len(actions) - 1)
 
 DATABASE = "jumpStart"
@@ -39,74 +39,58 @@ def fetchNews(messageToSearch,index):
     return news[index]
 
 
-def makeRequests(context):
-    convertDays = {0: 0, 1: 3, 2: 6,3: 9, 4: 12, 5: 15, 6: 18}
+def insertNIntoDataBase():
+    for i in range(0, 4):
+        insertSelicDataBase(i)
+        insertCryptoDataBase(i)
+        insertCoinsDataBase(i)
+        insertShareDataBase(i)
 
-    numberDayWeek = datetime.now().weekday()
+def insertShareDataBase(index):
+    actionsIndex = random.randint(0, len(actions) - 1)
+    messageShare = fetchNews(actions[actionsIndex], index)
 
-    startNews = convertDays[numberDayWeek]
-    limitNews = startNews + 2
+    data = {
+        "AÇÃO": messageShare
 
-    if numberDayWeek == 6:
-        startNews -= 1
-        limitNews -= 1
-
-    listNews = []
-
-    for i in range(startNews, limitNews + 1):
-       listNews.append(fetchNews(context,i))
-
-    return listNews
-
-def buildJsonBasedContext(listAsset,assetToSearch,assetKeyJson):
-    json_data = []
-    try:
-        listToJson = makeRequests(listAsset[assetToSearch])
-        json_data = [{assetKeyJson: asset} for asset in listToJson]
-        return json_data
-    except Exception as e:
-        datas = {
-            "Data": "",
-            "Ativo": assetKeyJson + ' -> google news ' +  listAsset[assetToSearch],
-            "Status": e
-        }
-        insertErrorGoogleSheets(datas)
-        print(e)
-        return json_data
-
-
-
-def buildJsonSelic():
-    json_data = []
-    try:
-        listSelic = makeRequests("Selic")
-        json_data += [{"SELIC": selic} for selic in listSelic]
-        return json_data
-    except Exception as e:
-        datas = {
-            "Data": "",
-            "Ativo":"selic-google news",
-            "Status": e
-        }
-        insertErrorGoogleSheets(datas)
-        print(e)
-        return json_data
-
-def insertInDataBase():
-    json_data = []
-
-    json_data += buildJsonBasedContext(cryptos, CRYPTO, "CRYPTO")
-    json_data += buildJsonBasedContext(actions, ACTIONS, "AÇÃO")
-    json_data += buildJsonBasedContext(coins, COINS, "MOEDA")
-    json_data += buildJsonSelic()
-
-    json_string = json.dumps(json_data, ensure_ascii=False, indent=4)
-
+    }
+    json_string = json.dumps(data, ensure_ascii=False)
     insertNews(DATABASE, json_string)
 
+def insertCoinsDataBase(index):
+    coinsIndex = random.randint(0, len(coins) - 1)
+    messageShare = fetchNews(coins[coinsIndex], index)
+
+    data = {
+        "MOEDA": messageShare
+
+    }
+    json_string = json.dumps(data, ensure_ascii=False)
+    insertNews(DATABASE, json_string)
+
+def insertSelicDataBase(i):
+    messageShare = fetchNews("selic", i)
+
+    data = {
+        "SELIC": messageShare
+
+    }
+    json_string = json.dumps(data, ensure_ascii=False)
+    insertNews(DATABASE, json_string)
+
+def insertCryptoDataBase(index):
+    cryptoIndex = random.randint(0, len(cryptos) - 1)
+    messageShare = fetchNews(cryptos[cryptoIndex], index)
+
+    data = {
+        "CRYPTO": messageShare
+
+    }
+    json_string = json.dumps(data, ensure_ascii=False)
+    insertNews(DATABASE, json_string)
 
 def main():
-    print()
+    insertNIntoDataBase()
 
 if __name__ == "__main__":
     main()

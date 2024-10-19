@@ -53,7 +53,7 @@ def getDateActual():
     dateActualFormated = dateActual.strftime('%Y-%m-%d')
     return dateActualFormated
 
-# se len(data_vale.values) ==2 sinal que possui dados das ações do dia atual, se len() ==1 informações do dia anterior
+# se len(data_vale.values) ==2 sinal que possui dados das ações do dia atual, se len() == 1 informações do dia anterior
 
 # data.values[0][0] => open
 # data.values[0][1] => high

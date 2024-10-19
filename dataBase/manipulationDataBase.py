@@ -15,29 +15,33 @@ def createDataBase():
 def createTableSelic(database):
     mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=database)
     mycursor = mydb.cursor()
-    mycursor.execute("CREATE TABLE tb_selic (id INT AUTO_INCREMENT PRIMARY KEY, date DATE, value FLOAT)")
+    mycursor.execute("CREATE TABLE tb_selic  (id INT AUTO_INCREMENT PRIMARY KEY, dateSelic DATE, valueSelic FLOAT)")
 
 def createTableCryptos(database):
     mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=database)
     mycursor = mydb.cursor()
-    mycursor.execute("CREATE TABLE tb_crypto (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), date DATE, high FLOAT, low FLOAT, vol FLOAT, last FLOAT, sell FLOAT, buy FLOAT)")
+    mycursor.execute("CREATE TABLE tb_crypto (id INT AUTO_INCREMENT PRIMARY KEY, nameCrypto VARCHAR(255), date DATE, highCrypto FLOAT, lowCrypto FLOAT, volCrypto FLOAT, lastCrypto FLOAT, sellCrypto FLOAT, buyCrypto FLOAT)")
 
 def createTableCoins(database):
     mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=database)
     mycursor = mydb.cursor()
-    mycursor.execute("CREATE TABLE tb_coins (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), date DATE, high FLOAT, low FLOAT, bid FLOAT, ask FLOAT)")
+    mycursor.execute("CREATE TABLE tb_coins  (id INT AUTO_INCREMENT PRIMARY KEY, nameCoin VARCHAR(255), dateCoin DATE, highCoin FLOAT, lowCoin FLOAT, bidCoin FLOAT, askCoin FLOAT)")
 
 def createTableActions(database):
     mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=database)
     mycursor = mydb.cursor()
-    mycursor.execute("CREATE TABLE tb_acoes (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), date DATE,open FLOAT, high FLOAT, low FLOAT, close FLOAT, volume FLOAT)")
+    mycursor.execute("CREATE TABLE tb_share  (id INT AUTO_INCREMENT PRIMARY KEY, nameShare VARCHAR(255), dateShare DATE,openShare FLOAT, highShare FLOAT, lowShare FLOAT, closeShare FLOAT, volumeShare FLOAT)")
 
 def createTableNews(database):
     mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=database)
     mycursor = mydb.cursor()
-    mycursor.execute("CREATE TABLE tb_news (id INT AUTO_INCREMENT PRIMARY KEY, news VARCHAR(10000), dateNews DATE)")
+    mycursor.execute("CREATE TABLE tb_news (id INT AUTO_INCREMENT PRIMARY KEY, news VARCHAR(300), dateNews DATE, isApproved BOOLEAN)")
 
 def main():
+    createTableSelic("jumpStart")
+    createTableCryptos("jumpStart")
+    createTableCoins("jumpStart")
+    createTableActions("jumpStart")
     createTableNews("jumpStart")
 
 if __name__ == "__main__":
