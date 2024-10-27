@@ -1,6 +1,6 @@
 import mysql.connector
 
-
+from common.dataBaseCredentials import HOST_DATABASE,USER_DATABASE,PASSWORD_DATABASE,NAME_DATABASE
 
 def getCountAsset(dataBase,table,asset):
     nameTocompare = ''
@@ -12,7 +12,7 @@ def getCountAsset(dataBase,table,asset):
         nameTocompare = "nameShare"
     else:
         return
-    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataBase)
+    mydb = mysql.connector.connect(host=HOST_DATABASE,user=USER_DATABASE,password=PASSWORD_DATABASE,database=dataBase)
     mycursor = mydb.cursor()
     
     mycursor.execute(f"SELECT COUNT(*) AS total FROM {table} WHERE {nameTocompare} = '{asset}'")
@@ -21,7 +21,7 @@ def getCountAsset(dataBase,table,asset):
     return countDataBase[0]
 
 def getCountSelic(dataBase):
-    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataBase)
+    mydb = mysql.connector.connect(host=HOST_DATABASE,user=USER_DATABASE,password=PASSWORD_DATABASE,database=dataBase)
     mycursor = mydb.cursor()
 
     mycursor.execute("SELECT COUNT(*) AS total FROM tb_selic")
@@ -29,15 +29,6 @@ def getCountSelic(dataBase):
     countDataBase = mycursor.fetchone()
     return countDataBase[0]
 
-def getIdToDeleteSelic(dataBase):
-    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataBase)
-    mycursor = mydb.cursor()
-
-    mycursor.execute("SELECT id FROM tb_selic LIMIT 1")
-
-    idCrypto = mycursor.fetchone()
-
-    return idCrypto[0]
 
 def getIdToDeleteAsset(dataBase,table,asset):
     nameTocompare = ''
@@ -49,7 +40,7 @@ def getIdToDeleteAsset(dataBase,table,asset):
         nameTocompare = "nameShare"
     else:
         return
-    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataBase)
+    mydb = mysql.connector.connect(host=HOST_DATABASE,user=USER_DATABASE,password=PASSWORD_DATABASE,database=dataBase)
     mycursor = mydb.cursor()
 
     mycursor.execute(f"SELECT id FROM {table} WHERE {nameTocompare} = '{asset}' LIMIT 1")
@@ -59,7 +50,7 @@ def getIdToDeleteAsset(dataBase,table,asset):
     return idCrypto[0]
 
 def deleteAssets(dataBase,table,asset):
-    mydb = mysql.connector.connect(host="localhost",user="homestead",password="secret",database=dataBase)
+    mydb = mysql.connector.connect(host=HOST_DATABASE,user=USER_DATABASE,password=PASSWORD_DATABASE,database=dataBase)
     mycursor = mydb.cursor()
 
     query = f"DELETE FROM {table} WHERE id IN (%s)"
@@ -95,27 +86,8 @@ def fetchEachAsset(dataBase,table,assets):
     if idToDelete != []:
         deleteAssets(dataBase,table,idToDelete)
 
-def manipulationCryptos(dataBase):
-    cryptos = ["BTC","LTC","ETH","XRP","BCH","USDT","LINK","DOGE","ADA","EOS","XLM","CHZ","AXS"]
-    fetchEachAsset(dataBase,"tb_crypto",cryptos)
 
 def manipulationAcoes(dataBase):
     actions = ["PETR4.SA","BBAS3.SA","ITSA4.SA","TRPL4.SA","VALE3.SA","CMIG4.SA","SANB11.SA","USIM5.SA","ABEV3.SA","MGLU3.SA"]
     fetchEachAsset(dataBase,"tb_share",actions)
 
-def manipulationCoins(dataBase):
-    coins = ["AED","ARS","AUD","BOB","CAD","CHF","CLP","CNY","COP","DKK","EUR","GBP","HKD","ILS","INR","JPY","MXN","NOK","NZD","PEN","PLN","PYG","RUB","SAR","SEK","SGD","THB","TRY","TWD","USD","USDT","UYU","VEF","XRP","ZAR"]
-    fetchEachAsset(dataBase,"tb_coins",coins)
-
-def manipulationSelicDeleteDatas(dataBase):
-    N = 1
-    countSelic = getCountSelic(dataBase)
-    if countSelic > N:
-        idToDelete = getIdToDeleteSelic(dataBase)
-        deleteAssets(dataBase,"tb_selic",[idToDelete])
-
-def main():
-    manipulationAcoes("jumpstart")
-
-if __name__ == "__main__":
-    main()

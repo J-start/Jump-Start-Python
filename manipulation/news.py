@@ -6,6 +6,7 @@ from datetime import datetime
 from API.consumeGoogleSheets import *
 from dataBase.insertDatas import *
 import json
+from common.dataBaseCredentials import NAME_DATABASE
 
 actions  = ["PETR4.SA", "BBAS3.SA", "ITSA4.SA", "TRPL4.SA", "VALE3.SA", "CMIG4.SA", "SANB11.SA", "USIM5.SA","ABEV3.SA", "MGLU3.SA"]
 coins    = ["moeda Peso Argentino", "moeda Dólar Australiano", "Moeda Boliviano", "moeda Dólar Canadense", "moeda Franco Suíço ", "moeda Peso Chileno","Yuan Chinês", "moeda Peso Colombiano", "moeda Coroa Dinamarquesa", "moeda Euro", "moeda Dólar de Hong Kong", "moeda Rúpia Indiana","moeda Iene Japonês", "moeda Peso Mexicano", "moeda Coroa Norueguesa","moeda Guarani Paraguaio ", "moeda Rublo Russo", "moeda Coroa Sueca", "moeda Dólar Taiuanês", "moeda Dólar Americano ", "moeda Peso Uruguaio","moeda Bolívar Venezuelano"]
@@ -15,7 +16,7 @@ CRYPTO   = random.randint(0, len(cryptos) - 1)
 
 ACTIONS  = random.randint(0, len(actions) - 1)
 
-DATABASE = "jumpStart"
+DATABASE = NAME_DATABASE
 
 def fetchNews(messageToSearch,index):
 
