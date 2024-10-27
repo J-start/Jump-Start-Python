@@ -1,5 +1,5 @@
 import mysql.connector
-
+from common.listShares import *
 from common.dataBaseCredentials import HOST_DATABASE,USER_DATABASE,PASSWORD_DATABASE,NAME_DATABASE
 
 def getCountAsset(dataBase,table,asset):
@@ -88,6 +88,6 @@ def fetchEachAsset(dataBase,table,assets):
 
 
 def manipulationAcoes(dataBase):
-    actions = ["PETR4.SA","BBAS3.SA","ITSA4.SA","TRPL4.SA","VALE3.SA","CMIG4.SA","SANB11.SA","USIM5.SA","ABEV3.SA","MGLU3.SA"]
+    actions = SHARES
     fetchEachAsset(dataBase,"tb_share",actions)
 
