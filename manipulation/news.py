@@ -8,7 +8,7 @@ import json
 from common.dataBaseCredentials import NAME_DATABASE
 from common.listShares import *
 
-actions  = SHARES
+actions  =  searchListShares()
 coins    = ["moeda Peso Argentino", "moeda Dólar Australiano", "Moeda Boliviano", "moeda Dólar Canadense", "moeda Franco Suíço ", "moeda Peso Chileno","Yuan Chinês", "moeda Peso Colombiano", "moeda Coroa Dinamarquesa", "moeda Euro", "moeda Dólar de Hong Kong", "moeda Rúpia Indiana","moeda Iene Japonês", "moeda Peso Mexicano", "moeda Coroa Norueguesa","moeda Guarani Paraguaio ", "moeda Rublo Russo", "moeda Coroa Sueca", "moeda Dólar Taiuanês", "moeda Dólar Americano ", "moeda Peso Uruguaio","moeda Bolívar Venezuelano"]
 cryptos  = ["BTC", "LTC", "ETH", "XRP", "BCH", "USDT", "LINK", "DOGE", "ADA", "EOS", "XLM", "CHZ", "AXS"]
 

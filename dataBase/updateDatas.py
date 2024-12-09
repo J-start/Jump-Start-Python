@@ -88,6 +88,6 @@ def fetchEachAsset(dataBase,table,assets):
 
 
 def manipulationAcoes(dataBase):
-    actions = SHARES
+    actions = searchListShares()
     fetchEachAsset(dataBase,"tb_share",actions)
 

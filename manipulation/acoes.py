@@ -31,7 +31,7 @@ def fetchInformationAction(dataBase,action):
         manipluationErrorGetCryptos(action,"400")
     
 def fetchAllInformationActions(dataBase):
-    actions = SHARES
+    actions = searchListShares()
     #
     for action in actions:
         fetchInformationAction(dataBase,action)
