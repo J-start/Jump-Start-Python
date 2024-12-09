@@ -10,9 +10,7 @@ def searchListShares():
     if response.status_code != 200:
         print("Erro na requisição google sheets:", response.status_code)
     else:
-        shares_list = response.text.replace('""',"")
-        shares_list = shares_list.replace('"',"")
-        return shares_list.split(",")
+        return response.text.replace('"',"").split(",")
 
 
 def main():
