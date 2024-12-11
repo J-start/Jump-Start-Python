@@ -1,100 +1,155 @@
 
-from GoogleNews import GoogleNews
 import random
-from datetime import datetime
 from API.consumeGoogleSheets import *
-from dataBase.insertDatas import *
+
 import json
 from common.dataBaseCredentials import NAME_DATABASE
-from common.listShares import *
+from dataBase.newsDB import *
+from dataBase.insertDatas import *
+from datetime import datetime
+from gnews import GNews
 
-actions  =  searchListShares()
-coins    = ["moeda Peso Argentino", "moeda Dólar Australiano", "Moeda Boliviano", "moeda Dólar Canadense", "moeda Franco Suíço ", "moeda Peso Chileno","Yuan Chinês", "moeda Peso Colombiano", "moeda Coroa Dinamarquesa", "moeda Euro", "moeda Dólar de Hong Kong", "moeda Rúpia Indiana","moeda Iene Japonês", "moeda Peso Mexicano", "moeda Coroa Norueguesa","moeda Guarani Paraguaio ", "moeda Rublo Russo", "moeda Coroa Sueca", "moeda Dólar Taiuanês", "moeda Dólar Americano ", "moeda Peso Uruguaio","moeda Bolívar Venezuelano"]
-cryptos  = ["BTC", "LTC", "ETH", "XRP", "BCH", "USDT", "LINK", "DOGE", "ADA", "EOS", "XLM", "CHZ", "AXS"]
+SHARE_COUNT = [0,0]
+COIN_COUNT = [0,0]
+CRYPTO_COUNT = [0,0]
 
-CRYPTO   = random.randint(0, len(cryptos) - 1)
+numbersAlreadyDrawn = []
 
-ACTIONS  = random.randint(0, len(actions) - 1)
+def countAsset(listAssetNames):
+    global SHARE_COUNT, COIN_COUNT, CRYPTO_COUNT
+    for valor in listAssetNames:
+        if valor[1] == "SHARE":
+            SHARE_COUNT[1] += 1
+        elif valor[1] == "COIN":
+            COIN_COUNT[1] += 1
+        elif valor[1] == "CRYPTO":
+            CRYPTO_COUNT[1] += 1
+    
+    SHARE_COUNT[0] = getFirstOccurrence(listAssetNames,"SHARE")
+    COIN_COUNT[0] = getFirstOccurrence(listAssetNames,"COIN")
+    CRYPTO_COUNT[0] = getFirstOccurrence(listAssetNames,"CRYPTO")
 
-DATABASE = NAME_DATABASE
 
-def fetchNews(messageToSearch,index):
 
-    googlenews = GoogleNews()
-    googlenews.enableException(True)
-    googlenews.set_lang('pt-br')
-    googlenews.set_period('1d')
-    googlenews.set_encode('utf-8')
+def getFirstOccurrence(listAssetNames, assetP):
+    for i, (asset, type) in enumerate(listAssetNames):
+        if type == assetP:
+            return i  
+    return 0  
+    
+
+def drawAsset(typeAsset):
+   
+    if typeAsset == "SHARE":
+        return draw(SHARE_COUNT[0],SHARE_COUNT[0] + SHARE_COUNT[1])
+    elif typeAsset == "COIN":
+        return draw(COIN_COUNT[0],COIN_COUNT[0] + COIN_COUNT[1])
+    elif typeAsset == "CRYPTO":
+       return draw(CRYPTO_COUNT[0],CRYPTO_COUNT[0] + CRYPTO_COUNT[1])
+
+def draw(MIN,MAX):
+    global numbersAlreadyDrawn
+    number = random.randint(MIN,MAX)
+    while number in numbersAlreadyDrawn:
+        number = random.randint(MIN,MAX)
+    numbersAlreadyDrawn.append(number)
+    return number
+
+def fetchListAsset():
+    listAssetNames = getNameAsset(NAME_DATABASE)
+    listAssetNames.sort(key=lambda x: x[1])
+
+    return listAssetNames
+
+def getAsset(listAsset, typeAsset):
+    indexAsset = drawAsset(typeAsset)
+    for i, (asset, type) in enumerate(listAsset):
+        if i == indexAsset:
+            return asset
+    return asset
+
+
+def searchAsset(typeAsset,listAsset):
+    for i in range(3):
+        asset = getAsset(listAsset,typeAsset)
+        if typeAsset == "SHARE":
+            messageShare = fetchNews("Ação "+asset)
+            try:
+                data = json.dumps(convertNewsToObject(messageShare,"SHARE"), ensure_ascii=False)
+                insertNews(NAME_DATABASE,data,convertDateApiToDateMysql(messageShare['published date']))
+            except Exception as e:
+                datas = {
+                    "Data": datetime.now(),
+                    "Ativo": "Erro ao buscar noticia, google news ",
+                    "Status": e
+                }
+                insertErrorGoogleSheets(datas)
+                return
+        elif typeAsset == "COIN":
+            messageCoin = fetchNews("Moeda "+asset)
+            try:
+                data = json.dumps(convertNewsToObject(messageCoin,"COIN"), ensure_ascii=False)
+                insertNews(NAME_DATABASE,data,convertDateApiToDateMysql(messageCoin['published date']))
+            except Exception as e:
+                datas = {
+                    "Data": datetime.now(),
+                    "Ativo": "Erro ao buscar noticia, google news ",
+                    "Status": e
+                }
+                insertErrorGoogleSheets(datas)
+                return
+        elif typeAsset == "CRYPTO":
+            messageCrypto = fetchNews("Cripto "+asset)
+            try:
+                data = json.dumps(convertNewsToObject(messageCrypto,"CRYPTO"), ensure_ascii=False)
+                insertNews(NAME_DATABASE,data,convertDateApiToDateMysql(messageCrypto['published date']))
+            except Exception as e:
+                datas = {
+                    "Data": datetime.now(),
+                    "Ativo": "Erro ao buscar noticia, google news ",
+                    "Status": e
+                }
+                insertErrorGoogleSheets(datas)
+                return
+
+def searchNews():
+    listAsset = fetchListAsset()
+    countAsset(listAsset)
+    searchAsset("SHARE",listAsset)
+    searchAsset("COIN",listAsset)
+    searchAsset("CRYPTO",listAsset)       
+
+
+
+def fetchNews(asset):
+    google_news = GNews(language='pt', country='BR',max_results=2,period='7d')
     try:
-        googlenews.search(messageToSearch)
+        news = google_news.get_news(asset)
     except Exception as e:
+        print("Erro ao buscar noticia, google news ",e)
         datas = {
-            "Data": "",
+            "Data": datetime.now(),
             "Ativo": "Erro ao buscar noticia, google news ",
             "Status": e
         }
         insertErrorGoogleSheets(datas)
-        return []
-    googlenews.get_page(1)
-    news = googlenews.get_texts()
-    return news[index]
+        return
+    
+    for article in news:
+        return article
 
+def convertDateApiToDateMysql(date):
+    date_obj = datetime.strptime(date, '%a, %d %b %Y %H:%M:%S GMT')
+    mysql_date_str = date_obj.strftime('%Y-%m-%d')
+    return mysql_date_str
 
-def insertNIntoDataBase():
-    for i in range(0, 4):
-        insertSelicDataBase(i)
-        insertCryptoDataBase(i)
-        insertCoinsDataBase(i)
-        insertShareDataBase(i)
-
-def insertShareDataBase(index):
-    actionsIndex = random.randint(0, len(actions) - 1)
-    messageShare = fetchNews(actions[actionsIndex], index)
-
-    data = {
-        "AÇÃO": messageShare
-
-    }
-    json_string = json.dumps(data, ensure_ascii=False)
-    insertNews(DATABASE, json_string)
-
-def insertCoinsDataBase(index):
-    coinsIndex = random.randint(0, len(coins) - 1)
-    messageShare = fetchNews(coins[coinsIndex], index)
-
-    data = {
-        "MOEDA": messageShare
-
-    }
-    json_string = json.dumps(data, ensure_ascii=False)
-    insertNews(DATABASE, json_string)
-
-def insertSelicDataBase(i):
-    messageShare = fetchNews("selic", i)
-
-    data = {
-        "SELIC": messageShare
-
-    }
-    json_string = json.dumps(data, ensure_ascii=False)
-    insertNews(DATABASE, json_string)
-
-def insertCryptoDataBase(index):
-    cryptoIndex = random.randint(0, len(cryptos) - 1)
-    messageShare = fetchNews(cryptos[cryptoIndex], index)
-
-    data = {
-        "CRYPTO": messageShare
-
-    }
-    json_string = json.dumps(data, ensure_ascii=False)
-    insertNews(DATABASE, json_string)
-
-def main():
-    insertNIntoDataBase()
-
-if __name__ == "__main__":
-    main()
-
-
-
+def convertNewsToObject(messageShare,typeAsset):
+        data = {
+         typeAsset: {
+            "description": messageShare['description'],
+                "url": messageShare['url']
+                }
+            }
+        return data
+    
+         

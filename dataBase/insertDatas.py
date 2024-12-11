@@ -11,13 +11,11 @@ def insertDatasActions(dataDase,name,date,open,high,low,close,volume):
 
     mydb.commit()
     
-def insertNews(dataDase,news):
-    dateActual = datetime.now()
-    dateFormatedSQL = dateActual.strftime('%Y-%m-%d')
+def insertNews(dataDase,news,dateNews):
     mydb = mysql.connector.connect(host=HOST_DATABASE,user=USER_DATABASE,password=PASSWORD_DATABASE,database=dataDase)
     mycursor = mydb.cursor()
     mycursor.execute('''
         INSERT INTO tb_news (news,dateNews,isApproved) VALUES (%s,%s,%s)
-    ''', (news,dateFormatedSQL,False))
+    ''', (news,dateNews,True))
     mydb.commit()
 
