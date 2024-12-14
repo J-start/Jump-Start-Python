@@ -71,6 +71,7 @@ def getAsset(listAsset, typeAsset):
 
 def searchAsset(typeAsset,listAsset):
     for i in range(3):
+    
         asset = getAsset(listAsset,typeAsset)
         if typeAsset == "SHARE":
             messageShare = fetchNews("Ação "+asset)
@@ -78,12 +79,8 @@ def searchAsset(typeAsset,listAsset):
                 data = json.dumps(convertNewsToObject(messageShare,"SHARE"), ensure_ascii=False)
                 insertNews(NAME_DATABASE,data,convertDateApiToDateMysql(messageShare['published date']))
             except Exception as e:
-                datas = {
-                    "Data": datetime.now(),
-                    "Ativo": "Erro ao buscar noticia, google news ",
-                    "Status": e
-                }
-                insertErrorGoogleSheets(datas)
+
+                handleError(e)
                 return
         elif typeAsset == "COIN":
             messageCoin = fetchNews("Moeda "+asset)
@@ -91,12 +88,8 @@ def searchAsset(typeAsset,listAsset):
                 data = json.dumps(convertNewsToObject(messageCoin,"COIN"), ensure_ascii=False)
                 insertNews(NAME_DATABASE,data,convertDateApiToDateMysql(messageCoin['published date']))
             except Exception as e:
-                datas = {
-                    "Data": datetime.now(),
-                    "Ativo": "Erro ao buscar noticia, google news ",
-                    "Status": e
-                }
-                insertErrorGoogleSheets(datas)
+
+                handleError(e)
                 return
         elif typeAsset == "CRYPTO":
             messageCrypto = fetchNews("Cripto "+asset)
@@ -104,12 +97,8 @@ def searchAsset(typeAsset,listAsset):
                 data = json.dumps(convertNewsToObject(messageCrypto,"CRYPTO"), ensure_ascii=False)
                 insertNews(NAME_DATABASE,data,convertDateApiToDateMysql(messageCrypto['published date']))
             except Exception as e:
-                datas = {
-                    "Data": datetime.now(),
-                    "Ativo": "Erro ao buscar noticia, google news ",
-                    "Status": e
-                }
-                insertErrorGoogleSheets(datas)
+
+                handleError(e)
                 return
 
 def searchNews():
@@ -126,13 +115,7 @@ def fetchNews(asset):
     try:
         news = google_news.get_news(asset)
     except Exception as e:
-        print("Erro ao buscar noticia, google news ",e)
-        datas = {
-            "Data": datetime.now(),
-            "Ativo": "Erro ao buscar noticia, google news ",
-            "Status": e
-        }
-        insertErrorGoogleSheets(datas)
+        handleError(e)
         return
     
     for article in news:
@@ -152,4 +135,10 @@ def convertNewsToObject(messageShare,typeAsset):
             }
         return data
     
-         
+def handleError(e):  
+    datas = {
+        "Data": datetime.now(),
+        "Ativo": "Erro ao buscar noticia, google news ",
+        "Status": e
+    }
+    insertErrorGoogleSheets(datas) 

@@ -1,7 +1,11 @@
 import requests
+from dotenv import load_dotenv
+load_dotenv()
+import os
 
 def searchListShares():
-    url = "http://localhost:8080/asset/request/?type=SHARE"
+    URL_BACKEND = os.environ["URL_BACKEND"]
+    url = f"${URL_BACKEND}asset/request/?type=SHARE"
     try:
         response = requests.get(url)
     except requests.exceptions.RequestException as e:
