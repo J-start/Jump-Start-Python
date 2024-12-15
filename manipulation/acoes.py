@@ -22,6 +22,8 @@ def fetchInformationAction(dataBase,share):
         low = data.values[0][2].round(4)
         close = data.values[0][3].round(4)
         volume = data.values[0][5].round(0)
+        #if volume == 0:
+            #return
         try:
             insertDatasActions(dataBase,share,date,open,high,low,close,volume)
         except:

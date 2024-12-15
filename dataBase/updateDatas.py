@@ -51,13 +51,13 @@ def deleteAssets(dataBase,table,asset):
 
 
 def fetchPossiblesIdsToDelete(dataBase,table,asset,idToDelete):
-        N = 1
+        MAX_SHARE = 320
         try:
             countAsset = getCountAsset(dataBase,table,asset)
         except Exception as e:
             manipluationError(asset, f"Erro na contagem de ações: ${str(e)}")
             return 
-        if countAsset > N:
+        if countAsset > MAX_SHARE:
             idCrypto = getIdToDeleteAsset(dataBase,table,asset)
             if idCrypto != -1:
                 idToDelete.append(idCrypto)   
