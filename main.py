@@ -5,7 +5,7 @@ from manipulation.acoes import *
 from common.dataBaseCredentials import NAME_DATABASE
 
 
-searchNews()
+fetchAllInformationActions(NAME_DATABASE)
 #insertNIntoDataBase()
 
 

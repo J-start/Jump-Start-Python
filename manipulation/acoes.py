@@ -11,9 +11,10 @@ dateBeforeActual = dateActual - timedelta(days=1)
 
 dateFormated = dateBeforeActual.strftime('%Y-%m-%d')
 
-def fetchInformationAction(dataBase,action):
+def fetchInformationAction(dataBase,share):
 
-    data = yf.download(action, start=dateFormated, progress=False)
+    data = yf.download(share, start=dateFormated, progress=False)
+
     if len(data.values) != 0:
         date = getDateActual()
         open = data.values[0][0].round(4)
@@ -22,30 +23,25 @@ def fetchInformationAction(dataBase,action):
         close = data.values[0][3].round(4)
         volume = data.values[0][5].round(0)
         try:
-            insertDatasActions(dataBase,action,date,open,high,low,close,volume)
+            insertDatasActions(dataBase,share,date,open,high,low,close,volume)
         except:
-            # TODO - handle the exception
-            print("erro")
-    else:    
-        # TODO - handle the case when len(data.values) is 0
-        manipluationErrorGetCryptos(action,"400")
+            manipluationError(share,"Erro ao inserir dados no banco de dados")
+
     
 def fetchAllInformationActions(dataBase):
     actions = searchListShares()
-    #
     for action in actions:
         fetchInformationAction(dataBase,action)
     try:
         manipulationAcoes(dataBase)
     except Exception as e:
-        # TODO - handle the exception
-        print("Erro ao manipular acoes, verificação de exclusão:", str(e))
+        manipluationError(action, f"Erro ao manipular acoes, verificação de exclusão: ${str(e)}")
 
 
-def manipluationErrorGetCryptos(crypto,status):
+def manipluationError(share,status):
      datas = {
             "Data": "",
-            "Crypto": "Crypto: "+crypto,
+            "Acao": share,
             "Status": status
              }
      insertErrorGoogleSheets(datas) 
