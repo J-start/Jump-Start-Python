@@ -73,31 +73,41 @@ def searchAsset(typeAsset,listAsset):
     for i in range(3):
     
         asset = getAsset(listAsset,typeAsset)
+
         if typeAsset == "SHARE":
             messageShare = fetchNews("Ação "+asset)
             try:
+                if messageShare is None:
+                    return
                 data = json.dumps(convertNewsToObject(messageShare,"SHARE"), ensure_ascii=False)
+                
                 insertNews(NAME_DATABASE,data,convertDateApiToDateMysql(messageShare['published date']))
             except Exception as e:
-
+                print("1",e)
                 handleError(e)
                 return
         elif typeAsset == "COIN":
             messageCoin = fetchNews("Moeda "+asset)
             try:
+                if messageCoin is None:
+                    return
                 data = json.dumps(convertNewsToObject(messageCoin,"COIN"), ensure_ascii=False)
+                
                 insertNews(NAME_DATABASE,data,convertDateApiToDateMysql(messageCoin['published date']))
             except Exception as e:
-
+                print("2",e)
                 handleError(e)
                 return
         elif typeAsset == "CRYPTO":
             messageCrypto = fetchNews("Cripto "+asset)
             try:
+                if messageCrypto is None:
+                    return
                 data = json.dumps(convertNewsToObject(messageCrypto,"CRYPTO"), ensure_ascii=False)
+                
                 insertNews(NAME_DATABASE,data,convertDateApiToDateMysql(messageCrypto['published date']))
             except Exception as e:
-
+                print("3",e)
                 handleError(e)
                 return
 
@@ -111,15 +121,16 @@ def searchNews():
 
 
 def fetchNews(asset):
-    google_news = GNews(language='pt', country='BR',max_results=2,period='7d')
+    google_news = GNews(language='pt', country='BR',max_results=20,period='7d')
     try:
         news = google_news.get_news(asset)
+        for new in news:
+            if new is not None:
+                return new
     except Exception as e:
+        print(e)
         handleError(e)
         return
-    
-    for article in news:
-        return article
 
 def convertDateApiToDateMysql(date):
     date_obj = datetime.strptime(date, '%a, %d %b %Y %H:%M:%S GMT')
