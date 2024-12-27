@@ -15,13 +15,11 @@ def fetch_actions_task():
 def search_news_task():
     searchNews()
 
-
 scheduler = BlockingScheduler()
 
 scheduler.add_job(search_news_task, 
                   trigger=CronTrigger(hour=11, minute=10, timezone=brazil_tz),
                   name="Search News at 11:10")
-
 
 scheduler.add_job(fetch_actions_task, 
                   trigger=CronTrigger(hour=10, minute=0, day_of_week="mon-fri", timezone=brazil_tz),
@@ -77,12 +75,16 @@ scheduler.add_job(fetch_actions_task,
                   name="Fetch Actions at 16:00")
 
 scheduler.add_job(fetch_actions_task, 
+                  trigger=CronTrigger(hour=16, minute=30, day_of_week="mon-fri", timezone=brazil_tz),
+                  name="Fetch Actions at 16:30")
+
+scheduler.add_job(fetch_actions_task, 
                   trigger=CronTrigger(hour=17, minute=30, day_of_week="mon-fri", timezone=brazil_tz),
                   name="Fetch Actions at 17:30")
 
 scheduler.add_job(fetch_actions_task, 
                   trigger=CronTrigger(hour=18, minute=0, day_of_week="mon-fri", timezone=brazil_tz),
-                  name="Fetch Actions at 15:00")
+                  name="Fetch Actions at 18:00")
 
 
 print("Agendador iniciado. Todas as horas no horário de Brasília.")
