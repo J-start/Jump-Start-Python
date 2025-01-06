@@ -1,12 +1,12 @@
 from API.consumeGoogleSheets import insertErrorGoogleSheets
 import mysql.connector
 from common.listShares import *
-from common.dataBaseCredentials import HOST_DATABASE,USER_DATABASE,PASSWORD_DATABASE,NAME_DATABASE
+from common.dataBaseCredentials import HOST_DATABASE,USER_DATABASE,PASSWORD_DATABASE,NAME_DATABASE,PORT_DATABASE
 
 def getCountAsset(dataBase,table,asset):
     nameTocompare = 'nameShare'
     try:
-        mydb = mysql.connector.connect(host=HOST_DATABASE,user=USER_DATABASE,password=PASSWORD_DATABASE,database=dataBase)
+        mydb = mysql.connector.connect(host=HOST_DATABASE,port=PORT_DATABASE,user=USER_DATABASE,password=PASSWORD_DATABASE,database=dataBase)
         mycursor = mydb.cursor()
     
         mycursor.execute(f"SELECT COUNT(*) AS total FROM {table} WHERE {nameTocompare} = '{asset}'")
@@ -20,7 +20,7 @@ def getCountAsset(dataBase,table,asset):
 def getIdToDeleteAsset(dataBase,table,asset):
     nameTocompare = 'nameShare'
     try:
-        mydb = mysql.connector.connect(host=HOST_DATABASE,user=USER_DATABASE,password=PASSWORD_DATABASE,database=dataBase)
+        mydb = mysql.connector.connect(host=HOST_DATABASE,port=PORT_DATABASE,user=USER_DATABASE,password=PASSWORD_DATABASE,database=dataBase)
         mycursor = mydb.cursor()
 
         mycursor.execute(f"SELECT id FROM {table} WHERE {nameTocompare} = '{asset}' LIMIT 1")
@@ -36,7 +36,7 @@ def getIdToDeleteAsset(dataBase,table,asset):
 def deleteAssets(dataBase,table,asset):
 
     try:
-        mydb = mysql.connector.connect(host=HOST_DATABASE,user=USER_DATABASE,password=PASSWORD_DATABASE,database=dataBase)
+        mydb = mysql.connector.connect(host=HOST_DATABASE,port=PORT_DATABASE,user=USER_DATABASE,password=PASSWORD_DATABASE,database=dataBase)
         mycursor = mydb.cursor()
 
         query = f"DELETE FROM {table} WHERE id IN (%s)"
