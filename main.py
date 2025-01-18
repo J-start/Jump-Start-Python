@@ -51,5 +51,5 @@ scheduler.add_job(fetch_actions_task, CronTrigger(hour=18, minute=0, day_of_week
 scheduler.start()
 
 print("Agendador iniciado. Todas as horas no horário de Brasília.")
-
+searchNews()
 

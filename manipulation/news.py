@@ -7,6 +7,7 @@ from common.dataBaseCredentials import NAME_DATABASE
 from dataBase.newsDB import *
 from dataBase.insertDatas import *
 from datetime import datetime
+from dataBase.updateNews import managerNews
 from gnews import GNews
 
 SHARE_COUNT = [0,0]
@@ -82,6 +83,7 @@ def searchAsset(typeAsset,listAsset):
                 data = json.dumps(convertNewsToObject(messageShare,"SHARE"), ensure_ascii=False)
                 
                 insertNews(NAME_DATABASE,data,convertDateApiToDateMysql(messageShare['published date']))
+                managerNews()
             except Exception as e:
                 print("1",e)
                 handleError(e)
@@ -94,6 +96,7 @@ def searchAsset(typeAsset,listAsset):
                 data = json.dumps(convertNewsToObject(messageCoin,"COIN"), ensure_ascii=False)
                 
                 insertNews(NAME_DATABASE,data,convertDateApiToDateMysql(messageCoin['published date']))
+                managerNews()
             except Exception as e:
                 print("2",e)
                 handleError(e)
@@ -106,6 +109,7 @@ def searchAsset(typeAsset,listAsset):
                 data = json.dumps(convertNewsToObject(messageCrypto,"CRYPTO"), ensure_ascii=False)
                 
                 insertNews(NAME_DATABASE,data,convertDateApiToDateMysql(messageCrypto['published date']))
+                managerNews()
             except Exception as e:
                 print("3",e)
                 handleError(e)
@@ -121,8 +125,9 @@ def searchNews():
 
 
 def fetchNews(asset):
-    google_news = GNews(language='pt', country='BR',max_results=20,period='7d')
+    
     try:
+        google_news = GNews(language='pt', country='BR',max_results=20,period='7d')
         news = google_news.get_news(asset)
         for new in news:
             if new is not None:
