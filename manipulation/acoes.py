@@ -9,25 +9,24 @@ from common.listShares import *
 dateActual = datetime.now()
 dateBeforeActual = dateActual - timedelta(days=1)
 
-dateFormated = dateBeforeActual.strftime('%Y-%m-%d')
-
 def fetchInformationAction(dataBase,share):
+    try:
+        data = yf.download(share, start=dateBeforeActual, progress=False)
 
-    data = yf.download(share, start=dateFormated, progress=False)
-
-    if len(data.values) != 0:
-        date = getDateActual()
-        open = data.values[0][0].round(4)
-        high = data.values[0][1].round(4)
-        low = data.values[0][2].round(4)
-        close = data.values[0][3].round(4)
-        volume = data.values[0][5].round(0)
-        #if volume == 0:
-            #return
-        try:
+        if len(data.values) != 0:
+            latest_data = data.iloc[-1] 
+            open = round(latest_data.values[0],4)
+            high = round(latest_data.values[1],4)
+            low = round(latest_data.values[2],4)
+            close = round(latest_data.values[3],4)
+            volume = round(latest_data.values[5],4)
+            if volume == 0:
+                return
+            date = getDateActual()
             insertDatasActions(dataBase,share,date,open,high,low,close,volume)
-        except:
-            manipluationError(share,"Erro ao inserir dados no banco de dados")
+    except Exception as e:
+            print("erro: ", e)
+            manipluationError(e,"Erro ao manipular ações")
 
     
 def fetchAllInformationActions(dataBase):
