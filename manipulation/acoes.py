@@ -34,7 +34,8 @@ def fetchAllInformationActions(dataBase):
     for action in actions:
         fetchInformationAction(dataBase,action)
     try:
-        manipulationAcoes(dataBase)
+        print("manipulando ações1")
+        manipulationAcoes()
     except Exception as e:
         manipluationError(action, f"Erro ao manipular acoes, verificação de exclusão: ${str(e)}")
 

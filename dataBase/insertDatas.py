@@ -21,3 +21,10 @@ def insertNews(dataDase,news,dateNews):
     ''', (news,dateFormatedSQL,dateNews,True))
     mydb.commit()
 
+def insertCrypto(database,name,value,date):
+    mydb = mysql.connector.connect(host=HOST_DATABASE,port=PORT_DATABASE,user=USER_DATABASE,password=PASSWORD_DATABASE,database=database)
+    mycursor = mydb.cursor()
+    sql = "INSERT INTO tb_crypto (nameCrypto,valueCrypto,dateCrypto) VALUES (%s,%s,%s)"
+    val = (name,value,str(date))
+    mycursor.execute(sql, val)
+    mydb.commit()
